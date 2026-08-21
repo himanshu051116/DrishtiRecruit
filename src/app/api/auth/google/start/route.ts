@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { randomBytes } from "node:crypto";
 
-const STATE_COOKIE = "tracehire_google_oauth_state";
+const STATE_COOKIE = "drishtirecruit_google_oauth_state";
 export async function GET() {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const appUrl = process.env.APP_URL ?? "http://localhost:3000";

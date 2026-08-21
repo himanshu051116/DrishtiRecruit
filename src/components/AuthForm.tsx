@@ -2,7 +2,7 @@
 import { FormEvent, useId, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export function AuthForm({ mode }: { mode: "login" | "register" }) {
+export function AuthForm({ mode, googleEnabled = false }: { mode: "login" | "register"; googleEnabled?: boolean }) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -24,7 +24,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
     finally { setBusy(false); }
   }
 
-  return <div className="space-y-4"><a href="/api/auth/google/start" className="btn-secondary w-full py-3">Continue with Google</a><div className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-wide text-zinc-400"><span className="h-px flex-1 bg-zinc-200"/><span>or use email</span><span className="h-px flex-1 bg-zinc-200"/></div><form onSubmit={submit} className="space-y-4">
+  return <div className="space-y-4">{googleEnabled && <><a href="/api/auth/google/start" className="btn-secondary w-full py-3">Continue with Google</a><div className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-wide text-zinc-400"><span className="h-px flex-1 bg-zinc-200"/><span>or use email</span><span className="h-px flex-1 bg-zinc-200"/></div></>}<form onSubmit={submit} className="space-y-4">
     {mode === "register" && <><Field name="name" label="Name" autoComplete="name"/><SelectField name="role" label="Account type" options={[{ value: "CANDIDATE", label: "Candidate" }, { value: "RECRUITER", label: "Recruiter" }]}/><Field name="companyName" label="Company" hint="Required for recruiter accounts" autoComplete="organization" optional/></>}
     <Field name="email" label="Email" type="email" autoComplete="email"/>
     <Field name="password" label="Password" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"}/>
