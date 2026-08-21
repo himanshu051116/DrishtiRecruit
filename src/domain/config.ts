@@ -1,4 +1,4 @@
-import { EvidenceSourceType, EvidenceStrength } from "./enums.js";
+import { EvidenceSourceType, EvidenceStrength } from "./enums";
 
 export interface ScoringConfig {
   sourceReliability: Record<EvidenceSourceType, number>;

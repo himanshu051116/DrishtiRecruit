@@ -2,24 +2,29 @@ import { prisma } from "@/lib/prisma";
 import { requirePageUser } from "@/lib/auth/page";
 import { ApplyPanel } from "@/components/ApplyPanel";
 import { ResumeUpload } from "@/components/ResumeUpload";
+import type { Prisma } from "@/generated/prisma/client";
 
 export default async function CandidateJobs({ searchParams }: { searchParams: Promise<{ q?: string; location?: string; workMode?: string; employmentType?: string; minSalary?: string }> }) {
   const user = await requirePageUser(["CANDIDATE"]);
   const filters = await searchParams;
   const q = filters.q?.trim() ?? ""; const location = filters.location?.trim() ?? ""; const workMode = filters.workMode?.trim() ?? ""; const employmentType = filters.employmentType?.trim() ?? ""; const minSalary = Number(filters.minSalary ?? 0) || 0;
   const candidate = await prisma.candidateProfile.findUnique({ where: { userId: user.id }, include: { resumes: { where: { isActive: true }, orderBy: { createdAt: "desc" } } } });
+  const searchFilter: Prisma.JobWhereInput | undefined = q ? {
+    OR: [{ title: { contains: q, mode: "insensitive" } }, { description: { contains: q, mode: "insensitive" } }, { company: { name: { contains: q, mode: "insensitive" } } }, { requirements: { some: { recruiterApproved: true, name: { contains: q, mode: "insensitive" } } } }],
+  } : undefined;
+  const where: Prisma.JobWhereInput = {
+    status: "OPEN",
+    AND: [
+      { OR: [{ deadline: null }, { deadline: { gte: new Date() } }] },
+      ...(searchFilter ? [searchFilter] : []),
+    ],
+    ...(location ? { location: { contains: location, mode: "insensitive" } } : {}),
+    ...(workMode ? { workMode: { equals: workMode, mode: "insensitive" } } : {}),
+    ...(employmentType ? { employmentType: { equals: employmentType, mode: "insensitive" } } : {}),
+    ...(minSalary ? { salaryMax: { gte: minSalary } } : {}),
+  };
   const jobs = await prisma.job.findMany({
-    where: {
-      status: "OPEN",
-      AND: [
-        { OR: [{ deadline: null }, { deadline: { gte: new Date() } }] },
-        ...(q ? [{ OR: [{ title: { contains: q, mode: "insensitive" } }, { description: { contains: q, mode: "insensitive" } }, { company: { name: { contains: q, mode: "insensitive" } } }, { requirements: { some: { recruiterApproved: true, name: { contains: q, mode: "insensitive" } } } }] }] : []),
-      ],
-      ...(location ? { location: { contains: location, mode: "insensitive" } } : {}),
-      ...(workMode ? { workMode: { equals: workMode, mode: "insensitive" } } : {}),
-      ...(employmentType ? { employmentType: { equals: employmentType, mode: "insensitive" } } : {}),
-      ...(minSalary ? { salaryMax: { gte: minSalary } } : {}),
-    },
+    where,
     include: { company: true, requirements: { where: { recruiterApproved: true } } }, orderBy: { createdAt: "desc" },
   });
   const resumes = (candidate?.resumes ?? []).map((resume) => ({ id: resume.id, fileName: resume.fileName, createdAt: resume.createdAt }));

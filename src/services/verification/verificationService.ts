@@ -5,8 +5,8 @@ import type { CriterionEvaluation, JobRequirement } from "@/domain/types";
 import type { CriterionStatus, EvidenceStrength, RequirementCategory, RequirementPriority } from "@/domain/enums";
 
 function requirementToDomain(r: {
-  id: string; name: string; description: string | null; category: RequirementCategory; priority: RequirementPriority;
-  weight: number; minimumEvidenceLevel: EvidenceStrength; verificationRequired: boolean; recruiterApproved: boolean;
+  id: string; name: string; description: string | null; category: string; priority: string;
+  weight: number; minimumEvidenceLevel: string; verificationRequired: boolean; recruiterApproved: boolean;
 }): JobRequirement {
   return {
     id: r.id,
@@ -22,7 +22,7 @@ function requirementToDomain(r: {
 }
 
 function evaluationToDomain(e: {
-  requirementId: string; fitScore: number; evidenceCoverage: number; status: CriterionStatus;
+  requirementId: string; fitScore: number; evidenceCoverage: number; status: string;
   supportScore: number; contradictionScore: number; evidenceCount: number; independentSourceCount: number;
 }): CriterionEvaluation {
   return {

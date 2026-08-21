@@ -1,4 +1,4 @@
-import {CriterionStatus,DecisionReadiness,EvidenceSourceType,EvidenceStrength,RequirementCategory,RequirementPriority,VerificationMethod} from "./enums.js";
+import {CriterionStatus,DecisionReadiness,EvidenceSourceType,EvidenceStrength,RequirementCategory,RequirementPriority,VerificationMethod} from "./enums";
 export interface JobRequirement { id:string; name:string; description?:string; category:RequirementCategory; priority:RequirementPriority; weight:number; minimumEvidenceLevel:EvidenceStrength; verificationRequired:boolean; recruiterApproved:boolean }
 export interface EvidenceItem { id:string; requirementId:string; sourceType:EvidenceSourceType; sourceId?:string; sourceExcerpt?:string; strength:EvidenceStrength; confidence:number; supportsRequirement:boolean; contradictsRequirement:boolean; verified:boolean }
 export interface CriterionEvaluation { requirementId:string; fitScore:number; evidenceCoverage:number; status:CriterionStatus; supportScore:number; contradictionScore:number; evidenceCount:number; independentSourceCount:number }

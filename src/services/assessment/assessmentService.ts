@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { chooseQuestion } from "./questionBank";
-import { EvidenceStrength, VerificationMethod } from "@/domain/enums";
+import { EvidenceStrength, RequirementCategory, VerificationMethod } from "@/domain/enums";
 import { recalculateApplicationCoverage } from "@/services/application/applicationService";
 import { transitionApplicationStage } from "@/services/application/stageService";
 import { notifyUser } from "@/services/notification/notificationService";
@@ -23,8 +23,9 @@ export async function assignAssessmentForVerification(verificationId: string) {
   if (!ASSESSMENT_METHODS.has(verification.method)) throw new Response("This verification is not an assessment method", { status: 409 });
   if (verification.assessmentAttempt) return verification.assessmentAttempt;
 
-  const blueprint = chooseQuestion(verification.requirement.name, verification.requirement.category, verification.method as VerificationMethod)
-    ?? chooseQuestion(verification.requirement.name, verification.requirement.category);
+  const requirementCategory = verification.requirement.category as RequirementCategory;
+  const blueprint = chooseQuestion(verification.requirement.name, requirementCategory, verification.method as VerificationMethod)
+    ?? chooseQuestion(verification.requirement.name, requirementCategory);
   if (!blueprint) throw new Response("No standardized question is available for this criterion", { status: 409 });
 
   const attempt = await prisma.$transaction(async (tx) => {

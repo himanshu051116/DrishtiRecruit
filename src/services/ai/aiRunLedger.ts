@@ -1,4 +1,3 @@
-import { prisma } from "@/lib/prisma";
 import { sha256Json, sha256Text } from "@/lib/integrity/canonicalJson";
 
 export type AiTraceContext = {
@@ -27,6 +26,7 @@ type AiRunRecord = AiTraceContext & {
  */
 export async function recordAiRun(input: AiRunRecord) {
   try {
+    const { prisma } = await import("@/lib/prisma");
     await prisma.aiRun.create({
       data: {
         companyId: input.companyId ?? null,

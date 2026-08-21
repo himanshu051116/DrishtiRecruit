@@ -7,15 +7,15 @@ import { transitionApplicationStage } from "@/services/application/stageService"
 import { canForceTransition, type Stage } from "@/services/application/stagePolicy";
 
 function asDomainRequirement(r: {
-  id: string; name: string; description: string | null; category: RequirementCategory; priority: RequirementPriority;
-  weight: number; minimumEvidenceLevel: EvidenceStrength; verificationRequired: boolean; recruiterApproved: boolean;
+  id: string; name: string; description: string | null; category: string; priority: string;
+  weight: number; minimumEvidenceLevel: string; verificationRequired: boolean; recruiterApproved: boolean;
 }): JobRequirement {
   return { id: r.id, name: r.name, description: r.description ?? undefined, category: r.category as RequirementCategory, priority: r.priority as RequirementPriority, weight: r.weight, minimumEvidenceLevel: r.minimumEvidenceLevel as EvidenceStrength, verificationRequired: r.verificationRequired, recruiterApproved: r.recruiterApproved };
 }
 
 function asDomainEvidence(e: {
-  id: string; requirementId: string; sourceType: EvidenceSourceType; sourceId: string | null; sourceExcerpt: string | null;
-  strength: EvidenceStrength; confidence: number; supportsRequirement: boolean; contradictsRequirement: boolean; verified: boolean;
+  id: string; requirementId: string; sourceType: string; sourceId: string | null; sourceExcerpt: string | null;
+  strength: string; confidence: number; supportsRequirement: boolean; contradictsRequirement: boolean; verified: boolean;
 }): EvidenceItem {
   return { id: e.id, requirementId: e.requirementId, sourceType: e.sourceType as EvidenceSourceType, sourceId: e.sourceId ?? undefined, sourceExcerpt: e.sourceExcerpt ?? undefined, strength: e.strength as EvidenceStrength, confidence: e.confidence, supportsRequirement: e.supportsRequirement, contradictsRequirement: e.contradictsRequirement, verified: e.verified };
 }
