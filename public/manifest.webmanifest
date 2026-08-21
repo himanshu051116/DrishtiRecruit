@@ -1,0 +1,13 @@
+{
+  "name": "DrishtiRecruit — Evidence-backed hiring",
+  "short_name": "DrishtiRecruit",
+  "description": "Applicant tracking with evidence coverage, controlled verification and human-owned decisions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#18181b",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

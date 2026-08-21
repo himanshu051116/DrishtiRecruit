@@ -1,0 +1,496 @@
+openapi: 3.1.0
+info:
+  title: DrishtiRecruit API
+  version: 1.4.0
+  description: Evidence-coverage ATS API for DevFusion PS-2.
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/auth/login:
+    post:
+      summary: Email/password login
+      responses: { '200': { description: Authenticated } }
+  /api/auth/google/start:
+    get:
+      summary: Start Google OAuth login
+      responses: { '302': { description: Redirect to Google } }
+  /api/jobs:
+    post:
+      summary: Create a job
+      responses: { '201': { description: Job created } }
+  /api/jobs/{jobId}/requirements:
+    post:
+      summary: Extract draft requirements from a job description
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Draft requirements } }
+  /api/applications:
+    post:
+      summary: Candidate applies to a job
+      responses: { '201': { description: Application created } }
+  /api/applications/{applicationId}/analyze:
+    post:
+      summary: Parse resume evidence and recalculate coverage
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Coverage recalculated } }
+  /api/applications/{applicationId}/evidence-matrix:
+    get:
+      summary: Read provenance-aware evidence matrix
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Evidence matrix } }
+  /api/applications/{applicationId}/verifications/plan:
+    post:
+      summary: Rank unresolved criteria and propose controlled verification
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Verification recommendations } }
+  /api/applications/{applicationId}/stage:
+    patch:
+      summary: Move an application through a valid workflow stage
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Stage updated } }
+  /api/applications/{applicationId}/offers:
+    post:
+      summary: Generate and send an offer
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '201': { description: Offer sent } }
+  /api/offers/{offerId}/respond:
+    post:
+      summary: Candidate accepts or declines an offer
+      parameters:
+        - in: path
+          name: offerId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Offer response recorded } }
+  /api/offers/{offerId}/pdf:
+    get:
+      summary: Download a generated PDF offer letter
+      parameters:
+        - in: path
+          name: offerId
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: PDF offer
+          content:
+            application/pdf: {}
+  /api/interviews:
+    post:
+      summary: Schedule criterion-driven interview
+      responses: { '201': { description: Interview scheduled } }
+  /api/assessment-attempts/{attemptId}/submit:
+    post:
+      summary: Submit standardized assessment and create evidence
+      parameters:
+        - in: path
+          name: attemptId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Assessment graded and coverage updated } }
+  /api/applications/{applicationId}/decisions:
+    post:
+      summary: Record human hiring decision and immutable evidence snapshot
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '201': { description: Decision recorded } }
+  /api/auth/forgot-password:
+    post:
+      summary: Request password reset token/email
+      responses: { '200': { description: Request accepted without account enumeration } }
+  /api/auth/reset-password:
+    post:
+      summary: Reset password and revoke active sessions
+      responses: { '200': { description: Password reset } }
+  /api/company:
+    patch:
+      summary: Update recruiter company profile
+      responses: { '200': { description: Company profile updated } }
+  /api/candidate/profile:
+    patch:
+      summary: Update candidate profile
+      responses: { '200': { description: Candidate profile updated } }
+  /api/notifications/{notificationId}/read:
+    post:
+      summary: Mark an owned notification as read
+      parameters:
+        - in: path
+          name: notificationId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Notification updated } }
+
+  /api/applications/{applicationId}/email:
+    post:
+      summary: Queue a recruiter message to the candidate and mirror it to notifications
+      responses: { '201': { description: Message queued or delivered } }
+  /api/interviews/{interviewId}/calendar:
+    get:
+      summary: Download an authorized interview ICS calendar invite
+      responses: { '200': { description: iCalendar document } }
+  /api/reports/recruiting.csv:
+    get:
+      summary: Export tenant-scoped application coverage data as CSV
+      responses: { '200': { description: CSV report } }
+  /api/admin/users/{userId}:
+    patch:
+      summary: Admin-only audited role or active-state update
+      responses: { '200': { description: Updated user } }
+
+  /api/assessments:
+    get:
+      summary: List tenant-scoped recruiter assessments
+      responses: { '200': { description: Assessment library } }
+    post:
+      summary: Create a reusable job assessment
+      responses: { '201': { description: Assessment created } }
+  /api/assessments/{assessmentId}:
+    patch:
+      summary: Update assessment metadata or active state
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Assessment updated } }
+  /api/assessments/{assessmentId}/questions:
+    post:
+      summary: Add a requirement-linked assessment question
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          schema: { type: string }
+      responses: { '201': { description: Question created } }
+  /api/assessments/{assessmentId}/assign:
+    post:
+      summary: Assign a reusable assessment to an application
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          schema: { type: string }
+      responses: { '201': { description: Assessment attempt assigned } }
+  /api/assessment-questions/{questionId}:
+    delete:
+      summary: Delete an unused assessment question
+      parameters:
+        - in: path
+          name: questionId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Question deleted } }
+  /api/interview-slots:
+    get:
+      summary: List open interview availability for the current company
+      responses: { '200': { description: Open availability } }
+    post:
+      summary: Publish interviewer availability
+      responses: { '201': { description: Availability slot created } }
+  /api/interview-slots/{slotId}:
+    delete:
+      summary: Delete an unbooked availability slot
+      parameters:
+        - in: path
+          name: slotId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Slot deleted } }
+  /api/applications/{applicationId}/interview-slots:
+    get:
+      summary: Candidate lists open interview slots for an owned application
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Available interview slots } }
+  /api/applications/{applicationId}/interview-slots/book:
+    post:
+      summary: Candidate atomically books an available interview slot
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '201': { description: Interview booked } }
+  /api/admin/settings:
+    get:
+      summary: Read platform settings
+      responses: { '200': { description: Platform settings } }
+    patch:
+      summary: Update platform settings
+      responses: { '200': { description: Platform settings updated } }
+  /api/admin/companies/{companyId}:
+    patch:
+      summary: Admin updates organization metadata
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Company updated } }
+  /api/admin/jobs/{jobId}:
+    patch:
+      summary: Admin changes job publication state
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Job updated } }
+  /api/admin/assessments/{assessmentId}:
+    patch:
+      summary: Admin activates or deactivates an assessment
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Assessment updated } }
+  /api/assessment-attempts/{attemptId}/answers:
+    put:
+      summary: Autosave candidate draft answers for an in-progress assessment
+      parameters:
+        - in: path
+          name: attemptId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Draft answers saved } }
+  /api/assessments/{assessmentId}/clone:
+    post:
+      summary: Clone a locked assessment into the next comparable version
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          schema: { type: string }
+      responses: { '201': { description: New inactive assessment version created } }
+  /api/health:
+    get:
+      summary: Public service and database reachability check
+      responses:
+        '200': { description: Service healthy }
+        '503': { description: Database unreachable }
+  /api/applications/{applicationId}/decision-readiness:
+    get:
+      summary: Read the latest decision-readiness calculation
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Decision readiness } }
+  /api/assessment-attempts/{attemptId}/start:
+    post:
+      summary: Start an assigned candidate assessment attempt
+      parameters:
+        - in: path
+          name: attemptId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Attempt started } }
+  /api/assessment-attempts/{attemptId}/tab-switch:
+    post:
+      summary: Record a candidate visibility-change signal during an active attempt
+      parameters:
+        - in: path
+          name: attemptId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Signal count updated } }
+  /api/auth/google/callback:
+    get:
+      summary: Complete Google OAuth after state validation
+      responses: { '302': { description: Authenticated and redirected } }
+  /api/auth/logout:
+    post:
+      summary: Revoke the current authenticated session
+      responses: { '200': { description: Logged out } }
+  /api/auth/logout-all:
+    post:
+      summary: Revoke all active sessions for the current user
+      responses: { '200': { description: All sessions revoked } }
+  /api/auth/me:
+    get:
+      summary: Read the current session user
+      responses: { '200': { description: Current user or null } }
+  /api/auth/register:
+    post:
+      summary: Register a new email/password account
+      responses: { '201': { description: Account registered } }
+  /api/auth/verify-email:
+    post:
+      summary: Verify an email token before protected recruiter access
+      responses: { '200': { description: Email verified } }
+  /api/candidate/resumes:
+    get:
+      summary: List resumes owned by the authenticated candidate
+      responses: { '200': { description: Candidate resume library } }
+    post:
+      summary: Upload and extract a validated PDF or DOCX resume
+      responses: { '201': { description: Resume uploaded } }
+  /api/interviews/{interviewId}/scorecards:
+    post:
+      summary: Submit criterion-linked structured interview feedback
+      parameters:
+        - in: path
+          name: interviewId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Scorecards saved and evidence recalculated } }
+  /api/jobs/{jobId}:
+    patch:
+      summary: Edit or close a tenant job
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Job updated } }
+  /api/verifications/{verificationId}:
+    patch:
+      summary: Approve, modify or skip a controlled verification recommendation
+      parameters:
+        - in: path
+          name: verificationId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Verification updated } }
+  /api/verifications/{verificationId}/assign-assessment:
+    post:
+      summary: Assign the standardized assessment selected for an approved verification
+      parameters:
+        - in: path
+          name: verificationId
+          required: true
+          schema: { type: string }
+      responses: { '201': { description: Assessment attempt assigned } }
+
+  /api/auth/2fa/status:
+    get:
+      summary: Read two-factor authentication status for the current user
+      responses: { '200': { description: Two-factor status } }
+  /api/auth/2fa/setup:
+    post:
+      summary: Generate a new TOTP setup secret for the authenticated user
+      responses: { '200': { description: TOTP setup material } }
+  /api/auth/2fa/confirm:
+    post:
+      summary: Confirm TOTP enrollment and issue one-time recovery codes
+      responses: { '200': { description: Two-factor authentication enabled } }
+  /api/auth/2fa/disable:
+    post:
+      summary: Disable two-factor authentication after re-verification
+      responses: { '200': { description: Two-factor authentication disabled } }
+  /api/auth/2fa/login/verify:
+    post:
+      summary: Complete a pending login with TOTP or a one-time recovery code
+      responses: { '200': { description: Authenticated session created } }
+  /api/candidate/resumes/{resumeId}:
+    patch:
+      summary: Activate or archive a candidate-owned resume version for future applications
+      parameters:
+        - in: path
+          name: resumeId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Resume status updated } }
+  /api/jobs/{jobId}/interview-question-drafts:
+    post:
+      summary: Draft evidence-seeking interview questions for recruiter-approved job requirements
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Interview question drafts created; recruiter approval still required } }
+  /api/auth/sessions:
+    get:
+      summary: List active device sessions for the current user
+      responses: { '200': { description: Active sessions } }
+  /api/auth/sessions/{sessionId}:
+    delete:
+      summary: Revoke another active session owned by the current user
+      parameters:
+        - in: path
+          name: sessionId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Session revoked } }
+  /api/auth/resend-verification:
+    post:
+      summary: Queue a fresh email-verification link for the signed-in unverified account
+      responses: { '200': { description: Verification message queued or account already verified } }
+  /api/applications/{applicationId}/decision-report.pdf:
+    get:
+      summary: Download a multi-page decision evidence packet for authorized hiring users
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Decision evidence PDF
+          content:
+            application/pdf: {}
+
+  /api/ready:
+    get:
+      summary: Deployment-readiness probe covering database, storage and required production configuration
+      responses: { '200': { description: Application ready }, '503': { description: One or more readiness checks failed } }
+  /api/candidate/privacy/export:
+    get:
+      summary: Export the authenticated candidate's own DrishtiRecruit account and hiring-process data
+      responses: { '200': { description: JSON data export } }
+  /api/candidate/privacy/deletion-request:
+    post:
+      summary: Record an authenticated candidate account-deletion request for administrator review
+      responses: { '200': { description: Deletion request recorded } }
+    delete:
+      summary: Cancel the authenticated candidate's pending deletion request
+      responses: { '200': { description: Deletion request cancelled } }
+  /api/admin/retention:
+    get:
+      summary: Preview expired operational records under the configured retention policy
+      responses: { '200': { description: Retention cleanup preview } }
+    post:
+      summary: Admin-only cleanup of expired operational records without deleting hiring evidence or audit history
+      responses: { '200': { description: Cleanup completed and audit logged } }
+
+  /api/applications/{applicationId}/integrity-audit:
+    get:
+      summary: Inspect criterion governance, evidence provenance, calculation freshness, DecisionTrace snapshot integrity and AI-run provenance
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema: { type: string }
+      responses: { '200': { description: Decision integrity audit } }

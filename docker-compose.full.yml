@@ -1,0 +1,80 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tracehire
+    volumes:
+      - tracehire_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tracehire"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  migrate:
+    build:
+      context: .
+      target: builder
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/tracehire
+    command: ["npx", "prisma", "db", "push", "--skip-generate"]
+    restart: "no"
+
+  seed:
+    profiles: ["demo"]
+    build:
+      context: .
+      target: builder
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/tracehire
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in your shell or .env before starting the demo stack}
+      TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY:?Set TWO_FACTOR_ENCRYPTION_KEY in your shell or .env before starting the full stack}
+      APP_URL: ${APP_URL:-http://localhost:3000}
+      AI_PROVIDER: heuristic
+    command: ["npm", "run", "db:seed"]
+    restart: "no"
+
+  app:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/tracehire
+      APP_URL: ${APP_URL:-http://localhost:3000}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in your shell or .env before starting the full stack}
+      TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY:?Set TWO_FACTOR_ENCRYPTION_KEY in your shell or .env before starting the full stack}
+      AI_PROVIDER: ${AI_PROVIDER:-heuristic}
+      AI_FALLBACK_TO_HEURISTIC: ${AI_FALLBACK_TO_HEURISTIC:-true}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+      EMAIL_WEBHOOK_URL: ${EMAIL_WEBHOOK_URL:-}
+      TRUST_PROXY_HEADERS: ${TRUST_PROXY_HEADERS:-false}
+      RESUME_STORAGE_DIR: /app/tracehire-resumes
+    volumes:
+      - tracehire_resumes:/app/tracehire-resumes
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/ready >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    restart: unless-stopped
+
+volumes:
+  tracehire_pgdata:
+  tracehire_resumes:

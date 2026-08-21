@@ -1,0 +1,936 @@
+{
+  "info": {
+    "name": "DrishtiRecruit v1.1 Core API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Core hackathon demo requests including Evidence Coverage, controlled verification, Assessment Studio, approved interview-question drafts, candidate interview self-scheduling, resume history and TOTP 2FA."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "applicationId",
+      "value": ""
+    },
+    {
+      "key": "interviewId",
+      "value": ""
+    },
+    {
+      "key": "assessmentId",
+      "value": ""
+    },
+    {
+      "key": "questionId",
+      "value": ""
+    },
+    {
+      "key": "slotId",
+      "value": ""
+    },
+    {
+      "key": "jobId",
+      "value": ""
+    },
+    {
+      "key": "companyId",
+      "value": ""
+    },
+    {
+      "key": "attemptId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Login recruiter",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"recruiter@tracehire.local\",\n  \"password\": \"DrishtiRecruit123!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "List jobs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/jobs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "jobs"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create application",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jobId\": \"\",\n  \"resumeId\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Analyse evidence",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications/{{applicationId}}/analyze",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            "{{applicationId}}",
+            "analyze"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Evidence matrix",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications/{{applicationId}}/evidence-matrix",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            "{{applicationId}}",
+            "evidence-matrix"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Plan verification",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications/{{applicationId}}/verifications/plan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            "{{applicationId}}",
+            "verifications",
+            "plan"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Decision readiness",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications/{{applicationId}}/decision-readiness",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            "{{applicationId}}",
+            "decision-readiness"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Send candidate message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications/{{applicationId}}/email",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            "{{applicationId}}",
+            "email"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subject\": \"Application update\",\n  \"message\": \"Hello, here is an update on your application.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Interview calendar",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/interviews/{{interviewId}}/calendar",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "interviews",
+            "{{interviewId}}",
+            "calendar"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Recruiting CSV",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/reports/recruiting.csv",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reports",
+            "recruiting.csv"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create recruiter assessment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/assessments",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "assessments"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jobId\": \"{{jobId}}\",\n  \"title\": \"Backend verification\",\n  \"description\": \"Comparable job-level assessment\",\n  \"durationMin\": 25\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Add assessment question",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/assessments/{{assessmentId}}/questions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "assessments",
+            "{{assessmentId}}",
+            "questions"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"category\": \"TECHNICAL_SKILL\",\n  \"method\": \"SQL\",\n  \"difficulty\": \"MEDIUM\",\n  \"prompt\": \"Write a query that groups paid orders by customer.\",\n  \"maxScore\": 10,\n  \"rubric\": {\n    \"type\": \"keyword\",\n    \"keywords\": [\n      \"select\",\n      \"group by\",\n      \"sum\"\n    ],\n    \"minimumHits\": 2\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Assign recruiter assessment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/assessments/{{assessmentId}}/assign",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "assessments",
+            "{{assessmentId}}",
+            "assign"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"applicationId\": \"{{applicationId}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Publish interview availability",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/interview-slots",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "interview-slots"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"interviewerId\": \"\",\n  \"startsAt\": \"2026-08-20T10:00:00.000Z\",\n  \"endsAt\": \"2026-08-20T10:45:00.000Z\",\n  \"mode\": \"VIDEO\",\n  \"meetingUrl\": \"https://meet.example/interview\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "List candidate interview slots",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications/{{applicationId}}/interview-slots",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            "{{applicationId}}",
+            "interview-slots"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Book candidate interview slot",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications/{{applicationId}}/interview-slots/book",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            "{{applicationId}}",
+            "interview-slots",
+            "book"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"slotId\": \"{{slotId}}\",\n  \"type\": \"TECHNICAL\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Update platform settings",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/admin/settings",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "settings"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"candidateSelfSchedulingEnabled\": true,\n  \"maintenanceNotice\": \"\",\n  \"dataRetentionDays\": 365\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Autosave assessment answers",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"answers\": [\n    {\n      \"questionId\": \"\",\n      \"answer\": \"draft answer\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/assessment-attempts/{{attemptId}}/answers",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "assessment-attempts",
+            "{{attemptId}}",
+            "answers"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Clone assessment version",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/assessments/{{assessmentId}}/clone",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "assessments",
+            "{{assessmentId}}",
+            "clone"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Health check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2FA status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/2fa/status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "2fa",
+            "status"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Start 2FA setup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/2fa/setup",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "2fa",
+            "setup"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"password\": \"DrishtiRecruit123!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Confirm 2FA setup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/2fa/confirm",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "2fa",
+            "confirm"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"123456\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Complete 2FA login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/2fa/login/verify",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "2fa",
+            "login",
+            "verify"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"123456\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Disable 2FA",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/2fa/disable",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "2fa",
+            "disable"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"123456\",\n  \"password\": \"DrishtiRecruit123!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Draft interview questions",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/jobs/{{jobId}}/interview-question-drafts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "jobs",
+            "{{jobId}}",
+            "interview-question-drafts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Archive resume version",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/candidate/resumes/{{resumeId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "candidate",
+            "resumes",
+            "{{resumeId}}"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"isActive\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Deployment readiness",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/ready",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "ready"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Candidate data export",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/candidate/privacy/export",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "candidate",
+            "privacy",
+            "export"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Request candidate account deletion",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/candidate/privacy/deletion-request",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "candidate",
+            "privacy",
+            "deletion-request"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Cancel candidate account deletion",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/candidate/privacy/deletion-request",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "candidate",
+            "privacy",
+            "deletion-request"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin retention preview",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/admin/retention",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "retention"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin operational retention cleanup",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/admin/retention",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "admin",
+            "retention"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Download decision evidence packet",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications/{{applicationId}}/decision-report.pdf",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            "{{applicationId}}",
+            "decision-report.pdf"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Decision integrity audit",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/applications/{{applicationId}}/integrity-audit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "applications",
+            "{{applicationId}}",
+            "integrity-audit"
+          ]
+        }
+      }
+    }
+  ]
+}

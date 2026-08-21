@@ -1,0 +1,12 @@
+import { requirePageUser } from "@/lib/auth/page";
+import { prisma } from "@/lib/prisma";
+import { ResumeUpload } from "@/components/ResumeUpload";
+import { ResumeHistoryActions } from "@/components/ResumeHistoryActions";
+
+export default async function CandidateResumeHistoryPage() {
+  const user = await requirePageUser(["CANDIDATE"]);
+  const candidate = await prisma.candidateProfile.findUnique({ where: { userId: user.id }, include: { resumes: { orderBy: { createdAt: "asc" }, include: { _count: { select: { applications: true } } } } } });
+  if (!candidate) return null;
+  const versions = candidate.resumes.map((resume, index) => ({ ...resume, version: index + 1 }));
+  return <main className="mx-auto max-w-5xl px-6 py-10"><div><p className="text-sm text-zinc-500">Candidate portal</p><h1 className="mt-1 text-3xl font-semibold tracking-tight">Resume version history</h1><p className="mt-2 text-sm leading-6 text-zinc-500">DrishtiRecruit preserves previous uploads so applications remain linked to the exact resume submitted at the time. Deactivation only hides a resume from new applications.</p></div><div className="mt-8"><ResumeUpload/></div><section className="mt-6 rounded-2xl border border-zinc-200 bg-white p-6"><div className="flex items-center justify-between"><h2 className="text-lg font-semibold">Uploaded versions</h2><span className="text-xs text-zinc-400">{versions.length} total</span></div><div className="mt-4 space-y-3">{versions.length === 0 ? <p className="text-sm text-zinc-500">No resumes uploaded yet.</p> : versions.slice().reverse().map((resume) => <article key={resume.id} className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-zinc-200 p-4"><div><div className="flex flex-wrap items-center gap-2"><p className="font-medium">v{resume.version} · {resume.fileName}</p><span className={`rounded-full px-2.5 py-1 text-xs ${resume.isActive ? "bg-emerald-50 text-emerald-700" : "bg-zinc-100 text-zinc-500"}`}>{resume.isActive ? "Active for new applications" : "Archived"}</span></div><p className="mt-1 text-xs text-zinc-500">Uploaded {resume.createdAt.toLocaleString()} · {resume.sizeBytes ? `${Math.round(resume.sizeBytes / 1024)} KB` : "size unavailable"} · used in {resume._count.applications} application{resume._count.applications === 1 ? "" : "s"}</p></div><ResumeHistoryActions resumeId={resume.id} isActive={resume.isActive}/></article>)}</div></section></main>;
+}

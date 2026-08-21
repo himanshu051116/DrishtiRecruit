@@ -1,0 +1,4 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+export function AnalyzeButton({applicationId}:{applicationId:string}){const[busy,setBusy]=useState(false);const[error,setError]=useState("");const router=useRouter();async function run(){setBusy(true);setError("");const r=await fetch(`/api/applications/${applicationId}/analyze`,{method:"POST",headers:{"content-type":"application/json"},body:"{}"});const b=await r.json().catch(()=>({}));setBusy(false);if(!r.ok){setError(b.error??"Analysis failed");return;}router.refresh();}return <div><button onClick={run} disabled={busy} className="rounded-xl bg-zinc-950 px-4 py-2.5 text-sm font-medium text-white">{busy?"Analysing evidence…":"Run evidence analysis"}</button>{error&&<p className="mt-2 text-sm text-red-700">{error}</p>}</div>}

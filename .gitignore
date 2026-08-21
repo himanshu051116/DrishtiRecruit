@@ -1,0 +1,12 @@
+node_modules
+.next
+.env
+.env.local
+.tracehire-data
+.vercel
+src/generated/prisma
+coverage
+*.log
+.DS_Store
+
+*.tsbuildinfo

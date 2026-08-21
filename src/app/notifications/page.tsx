@@ -1,0 +1,4 @@
+import { requirePageUser } from "@/lib/auth/page";
+import { prisma } from "@/lib/prisma";
+import { NotificationRow } from "@/components/NotificationRow";
+export default async function NotificationsPage() { const user = await requirePageUser(); const notifications = await prisma.notification.findMany({ where: { userId: user.id }, orderBy: { createdAt: "desc" }, take: 100 }); return <main className="mx-auto max-w-4xl px-6 py-10"><div><p className="text-sm text-zinc-500">Inbox</p><h1 className="mt-1 text-3xl font-semibold tracking-tight">Notifications</h1></div><div className="mt-8 space-y-3">{notifications.length === 0 ? <div className="rounded-2xl border border-zinc-200 bg-white p-8 text-sm text-zinc-500">No notifications yet.</div> : notifications.map((item) => <NotificationRow key={item.id} id={item.id} title={item.title} body={item.body} read={Boolean(item.readAt)} createdAt={item.createdAt.toLocaleString()}/>)}</div></main>; }

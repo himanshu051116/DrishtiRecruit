@@ -1,0 +1,3 @@
+import { JobCreateForm } from "@/components/JobCreateForm";
+import { requirePageUser } from "@/lib/auth/page";
+export default async function NewJob(){await requirePageUser(["RECRUITER","ADMIN"]);return <main className="mx-auto max-w-4xl px-6 py-12"><p className="text-sm text-zinc-500">Recruiter / Jobs</p><h1 className="mt-2 text-3xl font-semibold tracking-tight">Create a role</h1><p className="mt-2 text-sm text-zinc-600">DrishtiRecruit will draft explicit criteria. They remain inactive until a recruiter approves them.</p><div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6"><JobCreateForm/></div></main>}

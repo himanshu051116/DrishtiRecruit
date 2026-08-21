@@ -1,0 +1,36 @@
+name: CI
+"on":
+  push:
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: tracehire
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d tracehire"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/tracehire
+      JWT_SECRET: ci-only-secret-that-is-longer-than-thirty-two-characters
+      APP_URL: http://localhost:3000
+      TWO_FACTOR_ENCRYPTION_KEY: ci-only-two-factor-encryption-key-longer-than-thirty-two
+      AI_PROVIDER: heuristic
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm run prisma:generate
+      - run: npm run prisma:validate
+      - run: npm run qa:release
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build

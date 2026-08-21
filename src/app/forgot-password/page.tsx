@@ -1,0 +1,2 @@
+import { ForgotPasswordForm } from "@/components/PasswordResetForms";
+export default function ForgotPasswordPage() { return <main className="mx-auto max-w-md px-6 py-16"><h1 className="text-3xl font-semibold tracking-tight">Reset password</h1><p className="mt-2 text-sm text-zinc-600">Request a short-lived password reset link.</p><div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6"><ForgotPasswordForm/></div></main>; }

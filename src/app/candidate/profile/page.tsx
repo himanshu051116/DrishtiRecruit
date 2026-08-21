@@ -1,0 +1,4 @@
+import { requirePageUser } from "@/lib/auth/page";
+import { prisma } from "@/lib/prisma";
+import { CandidateProfileForm } from "@/components/CandidateProfileForm";
+export default async function CandidateProfilePage() { const user = await requirePageUser(["CANDIDATE"]); const candidate = await prisma.candidateProfile.findUnique({ where: { userId: user.id }, include: { user: true } }); if (!candidate) return null; return <main className="mx-auto max-w-5xl px-6 py-10"><div><p className="text-sm text-zinc-500">Candidate portal</p><h1 className="mt-1 text-3xl font-semibold tracking-tight">Profile</h1><p className="mt-2 text-sm text-zinc-500">Keep factual career details current; DrishtiRecruit does not treat self-declared skills as verified evidence by themselves.</p></div><div className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6"><CandidateProfileForm profile={{ ...candidate, name: candidate.user.name }}/></div></main>; }
