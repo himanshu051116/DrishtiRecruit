@@ -42,7 +42,7 @@ export default async function ApplicationEvidencePage({ params }: { params: Prom
   const decision = decisionLabel(matrix.application.decisionCoverage, conflicts.length > 0, unresolved.length);
   const readiness = decision.key;
   const [interviewers, recruiterAssessments] = await Promise.all([
-    prisma.user.findMany({ where: { companyId: found.job.companyId, role: "INTERVIEWER", emailVerifiedAt: { not: null }, isActive: true }, select: { id: true, name: true, email: true }, orderBy: { name: "asc" } }),
+    prisma.user.findMany({ where: { companyId: found.job.companyId, role: "INTERVIEWER", isActive: true }, select: { id: true, name: true, email: true }, orderBy: { name: "asc" } }),
     prisma.assessment.findMany({ where: { jobId: found.jobId, active: true, source: "RECRUITER" }, include: { _count: { select: { questions: true } } }, orderBy: { updatedAt: "desc" } }),
   ]);
 

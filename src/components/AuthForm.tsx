@@ -14,16 +14,7 @@ export function AuthForm({ mode, googleEnabled = false }: { mode: "login" | "reg
       const res = await fetch(`/api/auth/${mode}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(data) });
       const body = await res.json();
       if (!res.ok) throw new Error(body.error ?? "Request failed");
-      let developmentVerified = false;
-      if (mode === "register" && body.data?.developmentVerificationToken) {
-        const verify = await fetch("/api/auth/verify-email", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ token: body.data.developmentVerificationToken }) });
-        if (!verify.ok) throw new Error("Email verification failed");
-        developmentVerified = true;
-      }
-      if (mode === "register" && !developmentVerified) {
-        const delivery = body.data?.emailDelivery;
-        router.push(delivery === "not_configured" || delivery === "failed" ? `/verify-email?delivery=${delivery}` : "/verify-email");
-      } else if (mode === "login" && body.data?.requiresTwoFactor) router.push("/two-factor"); else router.push("/dashboard");
+      if (mode === "login" && body.data?.requiresTwoFactor) router.push("/two-factor"); else router.push("/dashboard");
       router.refresh();
     } catch (error) { setError(error instanceof Error ? error.message : "Request failed"); }
     finally { setBusy(false); }
