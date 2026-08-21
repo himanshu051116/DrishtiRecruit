@@ -3,9 +3,9 @@
 The demo should prove one idea: **a high match score is not the same thing as a well-supported hiring decision.** Do not tour every screen.
 
 ## 0:00–0:35 — Recruiter creates the role
-1. Sign in as `recruiter@tracehire.local`.
+1. Sign in as `recruiter@drishtirecruit.local`.
 2. Open a seeded Backend Engineer job or create one.
-3. Show RequirementGraph and recruiter approval.
+3. Show role criteria and recruiter approval.
 4. Point out must-have vs important vs preferred criteria.
 
 Message to judges: AI may propose criteria, but only recruiter-approved criteria enter evaluation.
@@ -19,7 +19,7 @@ Message to judges: AI may propose criteria, but only recruiter-approved criteria
 Message: DrishtiRecruit distinguishes **ability evidence missing** from **ability missing**.
 
 ## 1:25–2:10 — Close one evidence gap
-1. Run/approve VerifyLoop for a weak technical requirement.
+1. Run/approve the verification plan for a weak technical requirement.
 2. Assign the standardized verification.
 3. Switch to Candidate and complete the seeded assessment.
 4. Return to recruiter view and show the criterion gaining assessment-backed evidence and coverage recalculating.

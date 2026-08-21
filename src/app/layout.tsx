@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
 };
 
-const themeScript = `(()=>{try{const saved=localStorage.getItem('tracehire-theme');const dark=saved==='dark'||(!saved&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light'}catch{}})()`;
+const themeScript = `(()=>{try{const saved=localStorage.getItem('drishtirecruit-theme');const dark=saved==='dark'||(!saved&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light'}catch{}})()`;
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const [user, platform] = await Promise.all([getSessionUser(), getPlatformSettings()]);

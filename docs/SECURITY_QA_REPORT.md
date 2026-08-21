@@ -62,7 +62,7 @@ This report records high-value issues found while reviewing v0.7 and the corresp
 ### 12. Deployment persistence/schema bootstrap
 **Finding:** the Docker named volume was mounted at a path different from the app's default resume-storage path, and the full stack did not initialize a fresh database schema before starting the app.
 
-**Fix:** runner and Compose use `/app/tracehire-resumes`, the directory is writable by the non-root app user, and the full-stack topology includes a schema-init service plus app healthcheck. The current bootstrap uses `prisma db push` for hackathon convenience; production should use committed migrations.
+**Fix:** runner and Compose use `/app/drishtirecruit-resumes`, the directory is writable by the non-root app user, and the full-stack topology includes a schema-init service plus app healthcheck. The current bootstrap uses `prisma db push` for hackathon convenience; production should use committed migrations.
 
 ## Browser hardening
 
@@ -112,7 +112,7 @@ Not claimed as solved in v0.8:
 A job carrying `status=OPEN` no longer implies it accepts applications forever. Candidate submission uses a server-side deadline check, public job discovery hides expired roles, and an already-expired job cannot be published as OPEN.
 
 ### Candidate privacy surface
-Candidates can export only their own account/application/hiring-process data. Account deletion is recorded as an auditable request rather than immediately cascading through hiring records. The generic retention cleanup never deletes EvidenceLedger, DecisionTrace, applications, or audit history.
+Candidates can export only their own account/application/hiring-process data. Account deletion is recorded as an auditable request rather than immediately cascading through hiring records. The generic retention cleanup never deletes evidence records, decision traces, applications, or audit history.
 
 ### Operational retention boundaries
 The Admin retention action is intentionally narrow: expired/used auth tokens, expired/revoked sessions, sufficiently old delivered/failed email outbox rows, and sufficiently old read notifications. This avoids a misleading claim that one global retention number can safely erase employment records across jurisdictions.
@@ -133,5 +133,5 @@ Long free-text/code responses to the same exact question can be compared using n
 ## v1.2 integrity hardening
 - New DecisionTrace evidence snapshots are hashed with canonical JSON SHA-256 and rechecked when generating evidence packets/audits.
 - AI/heuristic execution provenance stores hashes and operational metadata instead of a second raw copy of candidate/job content.
-- Decision Integrity Audit detects evidence linked outside the approved RequirementGraph, missing source excerpts, stale criterion calculations, snapshot hash mismatches and terminal workflow inconsistencies.
+- Decision Integrity Audit detects evidence linked outside the approved role criteria, missing source excerpts, stale criterion calculations, snapshot hash mismatches and terminal workflow inconsistencies.
 - Candidate privacy export includes AI execution metadata related to the candidate's own applications without exposing other applicants.

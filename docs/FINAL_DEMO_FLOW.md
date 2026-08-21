@@ -1,74 +1,83 @@
-# DrishtiRecruit v1.3 — final 4–5 minute judge demo
+# DrishtiRecruit demo flow
 
-## Demo objective
-Show one complete hiring decision where **apparent fit, evidence coverage, and decision coverage are visibly different**. The point is not that DrishtiRecruit replaces a recruiter; it makes the evidence state of the hiring process inspectable and actionable.
+## The story to tell
 
-## 0:00–0:35 — create / open the role
-- Sign in as the seeded recruiter.
-- Open **Backend Engineer**.
-- Show recruiter-approved RequirementGraph: Node.js, PostgreSQL, REST API Design, Docker, Security Design, Communication, optional AWS.
-- Point out that AI-generated criteria remain drafts until recruiter approval.
+DrishtiRecruit is not a resume-ranking tool. It helps a hiring team see what supports a candidate's fit, what remains unknown, and what must be checked before a person makes the final decision.
 
-## 0:35–1:20 — show the flagship problem
-Open Priya's application.
+Use the local seeded data and present one decision path in about five minutes.
 
-Expected demo shape:
-- high Fit Score;
-- materially lower Evidence Coverage;
-- incomplete Decision Coverage;
-- Docker weak/partial;
-- Communication missing.
+## 0:00–0:35 — start with the role
 
-Open a criterion to show exact EvidenceLedger provenance rather than a black-box score.
+1. Sign in as the recruiter.
+2. Open **Backend Engineer**.
+3. Show the approved role criteria: Node.js, PostgreSQL, REST API Design, Docker, Security Design, Communication, and optional AWS.
+4. Explain that criteria are reviewed before they affect any candidate evaluation.
 
-## 1:20–2:05 — close one evidence gap
-- Use VerifyLoop.
-- Approve the standardized Docker verification.
-- Switch to the candidate account and complete the seeded assessment.
-- Return to the recruiter view.
-- Show new ASSESSMENT evidence and the resulting coverage increase.
+Suggested line:
 
-## 2:05–2:45 — target the interview at what remains unknown
-- Show that already-verified Node.js is not repeatedly prioritized.
-- Publish/select an interview slot.
-- Candidate self-books.
-- Open the interviewer kit and show the unresolved Communication / Security criterion.
-- Submit a structured evidence note and scorecard.
+> I start by making the role explicit, so the team agrees on what needs evidence before comparing people.
 
-## 2:45–3:25 — compare candidates
-Open Candidate Comparison.
+## 0:35–1:25 — show the important difference
 
-Emphasize the deliberately designed contrast:
-- Priya can have stronger apparent fit but weaker verification;
-- Arjun can have slightly lower fit but much stronger Evidence / Decision Coverage.
+Open **Priya Sharma**.
 
-Do **not** describe this as an automatic ranking or rejection mechanism.
+Point out:
 
-## 3:25–4:05 — human decision and auditability
-- Open DecisionTrace.
-- Show readiness, unresolved must-haves, evidence snapshot, and human ownership.
-- Record a human decision.
-- If demonstrating an override, show the mandatory reason field.
+- strong fit;
+- lower evidence coverage;
+- incomplete decision coverage;
+- weak Docker evidence and missing Communication evidence.
 
-## 4:05–4:25 — integrity + AI transparency
-- On the application page, show **Decision Integrity Audit** and its separate PASS/WARN/FAIL checks.
-- Open **AI Transparency** and show provider/model/prompt version/fallback state plus hashed input/output provenance.
-- Explain that the ledger does not duplicate raw resume/job text and does not control final hiring state.
-- Download the Decision evidence PDF and point to the stored DecisionTrace snapshot SHA-256 + integrity check.
+Open a row in the evidence matrix and show the source behind the status. Emphasize that a missing source is treated as something to verify, not as proof the candidate cannot do the work.
 
-## 4:25–4:50 — analytics close
-Open Recruiting Analytics:
-- Fit distribution;
-- Evidence Coverage distribution;
-- Decision Coverage distribution;
-- high-fit / low-evidence review queue;
-- evidence gaps and evaluation redundancy.
+## 1:25–2:10 — close an evidence gap consistently
 
-Close with:
-> DrishtiRecruit does not simply ask who appears to match. It asks what evidence supports the match, what is still unknown, and whether the hiring team has enough comparable evidence to make a human decision.
+1. Open the verification plan.
+2. Choose the standardized Docker assessment for the open criterion.
+3. Switch to the candidate account and complete the assigned assessment.
+4. Return to the recruiter workspace and show the new assessment evidence in the same matrix.
 
-## Optional 20-second technical close
-Show `/docs`, `/api/health`, `/api/ready`, Docker/CI artifacts, ER diagram, and the admin audit / retention panel.
+Suggested line:
 
-## v1.2 close
-After showing DecisionTrace, finish with the **Decision Integrity Audit**, **AI Execution Ledger**, and **Decision evidence PDF**. Together they show not only what DrishtiRecruit concluded, but whether the technical evidence path is structurally inspectable and whether the saved DecisionTrace snapshot still matches its SHA-256 hash.
+> The point is not to give every candidate a different test. I use a repeatable check that feeds the same decision record.
+
+## 2:10–2:50 — target the interview
+
+1. Show that already verified Node.js evidence is not the priority.
+2. Publish or select an interview slot.
+3. Book the slot as the candidate.
+4. Open the interviewer kit.
+5. Show the unresolved Communication or Security criterion and submit a structured scorecard.
+
+## 2:50–3:35 — compare evidence, not just fit
+
+Open the candidate comparison view.
+
+- Priya can appear highly aligned but still have open evidence gaps.
+- Arjun may have a lower fit measure while having stronger evidence and decision coverage.
+- Meera makes the missing must-have path easy to demonstrate.
+
+Avoid describing this as automatic ranking, rejection, or hiring.
+
+## 3:35–4:15 — make the decision human-owned
+
+1. Open the decision panel.
+2. Show readiness, unresolved must-haves, and the evidence snapshot.
+3. Record a hiring-manager decision.
+4. If you demonstrate an incomplete-coverage override, show the required reason.
+5. Open the Decision Integrity Audit to show separate structural checks instead of a single trust score.
+
+## 4:15–4:45 — close with traceability
+
+1. Open **Processing history** from the navigation.
+2. Show the provider, fallback, duration, and input/output hashes without exposing candidate or role text.
+3. Download the Decision evidence PDF.
+4. Finish in analytics with the fit, evidence coverage, decision coverage, and evidence-gap views.
+
+Suggested close:
+
+> DrishtiRecruit does not just ask who looks like a match. It shows what supports the match, what still needs verification, and whether the team has enough comparable evidence for a human decision.
+
+## Optional technical close
+
+Show `/docs`, `/api/health`, `/api/ready`, the [architecture guide](ARCHITECTURE.md), the ER diagram, and the Docker/CI files. Keep this to 20 seconds; the product story should come first.

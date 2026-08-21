@@ -13,7 +13,7 @@ function requiredProductionConfig() {
 }
 
 async function checkStorage() {
-  const root = process.env.RESUME_STORAGE_DIR || path.join(process.cwd(), ".tracehire-data", "resumes");
+  const root = process.env.RESUME_STORAGE_DIR || path.join(process.cwd(), ".drishtirecruit-data", "resumes");
   try {
     await mkdir(root, { recursive: true, mode: 0o700 });
     await access(root, constants.W_OK);

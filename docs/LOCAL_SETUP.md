@@ -17,7 +17,7 @@ docker compose up -d postgres
 Default development URL in `.env.example`:
 
 ```text
-postgresql://postgres:postgres@localhost:5432/tracehire?schema=public
+postgresql://postgres:postgres@localhost:5432/drishtirecruit?schema=public
 ```
 
 ## 3. Install dependencies

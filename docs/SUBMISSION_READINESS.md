@@ -2,7 +2,7 @@
 
 ## v1.2 integrity evidence
 - Decision Integrity Audit on every recruiter application.
-- AI Transparency ledger at `/recruiter/ai-transparency`.
+- Processing History at `/recruiter/ai-transparency`.
 - SHA-256 DecisionTrace evidence snapshot integrity surfaced in the PDF evidence packet.
 
 ## Core judge path

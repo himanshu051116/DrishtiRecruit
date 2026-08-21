@@ -4,11 +4,11 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: tracehire
+      POSTGRES_DB: drishtirecruit
     volumes:
-      - tracehire_pgdata:/var/lib/postgresql/data
+      - drishtirecruit_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d tracehire"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d drishtirecruit"]
       interval: 5s
       timeout: 3s
       retries: 20
@@ -22,7 +22,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/tracehire
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/drishtirecruit
     command: ["npx", "prisma", "db", "push", "--skip-generate"]
     restart: "no"
 
@@ -35,7 +35,7 @@ services:
       migrate:
         condition: service_completed_successfully
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/tracehire
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/drishtirecruit
       JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in your shell or .env before starting the demo stack}
       TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY:?Set TWO_FACTOR_ENCRYPTION_KEY in your shell or .env before starting the full stack}
       APP_URL: ${APP_URL:-http://localhost:3000}
@@ -54,7 +54,7 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/tracehire
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/drishtirecruit
       APP_URL: ${APP_URL:-http://localhost:3000}
       JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in your shell or .env before starting the full stack}
       TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY:?Set TWO_FACTOR_ENCRYPTION_KEY in your shell or .env before starting the full stack}
@@ -64,9 +64,9 @@ services:
       OPENAI_MODEL: ${OPENAI_MODEL:-}
       EMAIL_WEBHOOK_URL: ${EMAIL_WEBHOOK_URL:-}
       TRUST_PROXY_HEADERS: ${TRUST_PROXY_HEADERS:-false}
-      RESUME_STORAGE_DIR: /app/tracehire-resumes
+      RESUME_STORAGE_DIR: /app/drishtirecruit-resumes
     volumes:
-      - tracehire_resumes:/app/tracehire-resumes
+      - drishtirecruit_resumes:/app/drishtirecruit-resumes
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/ready >/dev/null || exit 1"]
       interval: 15s
@@ -76,5 +76,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  tracehire_pgdata:
-  tracehire_resumes:
+  drishtirecruit_pgdata:
+  drishtirecruit_resumes:

@@ -16,11 +16,11 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV RESUME_STORAGE_DIR=/app/tracehire-resumes
+ENV RESUME_STORAGE_DIR=/app/drishtirecruit-resumes
 RUN addgroup --system --gid 1001 nodejs \
   && adduser --system --uid 1001 nextjs \
-  && mkdir -p /app/tracehire-resumes \
-  && chown -R nextjs:nodejs /app/tracehire-resumes
+  && mkdir -p /app/drishtirecruit-resumes \
+  && chown -R nextjs:nodejs /app/drishtirecruit-resumes
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static

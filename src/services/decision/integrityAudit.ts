@@ -48,7 +48,7 @@ export async function getDecisionIntegrityAudit(applicationId: string) {
     id: "evidence-linkage",
     label: "Evidence-to-requirement linkage",
     status: orphanEvidence.length ? "FAIL" : "PASS",
-    detail: orphanEvidence.length ? `${orphanEvidence.length} evidence item(s) point outside the currently approved RequirementGraph.` : `${application.evidence.length} evidence item(s) are linked to approved criteria.`,
+    detail: orphanEvidence.length ? `${orphanEvidence.length} evidence item(s) point outside the currently approved role criteria.` : `${application.evidence.length} evidence item(s) are linked to approved criteria.`,
   });
 
   const missingProvenance = application.evidence.filter((item) => !item.sourceExcerpt?.trim());
@@ -98,7 +98,7 @@ export async function getDecisionIntegrityAudit(applicationId: string) {
     id: "ai-provenance",
     label: "AI execution provenance",
     status: aiRuns.length ? "PASS" : "WARN",
-    detail: aiRuns.length ? `${aiRuns.length} recent AI/heuristic run(s) have hashed input/output provenance and provider metadata.` : "No AI/heuristic analysis run has been recorded for this application yet.",
+    detail: aiRuns.length ? `${aiRuns.length} recent processing run(s) have hashed input/output provenance and provider metadata.` : "No processing run has been recorded for this application yet.",
   });
 
   const summary = {

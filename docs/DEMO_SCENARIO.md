@@ -17,7 +17,7 @@ Strong resume presentation. Node/PostgreSQL evidence is strong, Docker is weak, 
 Expected story:
 1. Resume creates a high apparent fit.
 2. Decision Coverage remains low because Security is unevaluated.
-3. VerifyLoop recommends a standardized Docker practical and a Security interview item.
+3. The verification plan recommends a standardized Docker practical and a Security interview item.
 4. New evidence raises coverage.
 5. Human hiring manager makes the final decision.
 

@@ -3,7 +3,7 @@
 ## v1.2 decision-integrity additions
 - Privacy-preserving AI Run Ledger for requirement extraction, resume evidence extraction and interview-question drafting.
 - AI run records store provider/model/prompt version/duration/fallback state plus SHA-256 input/output hashes; raw candidate/job text is not duplicated into the ledger.
-- Recruiter/Admin AI Transparency page with recent run provenance.
+- Recruiter/Admin Processing History page with recent run provenance.
 - Decision Integrity Audit checks approved criterion structure, evidence linkage/provenance, evaluation freshness, DecisionTrace snapshot hashes and terminal workflow consistency.
 - New DecisionTrace records store `evidenceSnapshotSha256`; Decision Evidence Packets surface the integrity result.
 
@@ -23,9 +23,9 @@
 - company tenancy and public careers pages
 - job CRUD and AI-assisted requirement drafts with recruiter approval
 - candidate profiles, resume upload, PDF/DOCX text extraction and duplicate checks
-- provenance-aware EvidenceLedger
+- provenance-aware evidence records
 - deterministic Fit, Evidence Coverage and Decision Coverage
-- controlled VerifyLoop with standardized verification
+- controlled verification planning with standardized verification
 - recruiter Assessment Studio for reusable MCQ/coding/SQL/debugging/practical tests
 - recruiter-created questions can link directly to approved job requirements
 - assigned assessments are locked against content mutation; one-click version cloning preserves candidate comparability while enabling edits

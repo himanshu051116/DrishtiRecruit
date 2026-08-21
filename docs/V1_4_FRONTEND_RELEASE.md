@@ -1,6 +1,6 @@
 # DrishtiRecruit v1.4 — Seamless Frontend Release
 
-v1.4 does not change the core hiring intelligence model. It makes that model visible and usable.
+v1.4 does not change the core evidence model. It makes that model visible and usable.
 
 ## Primary UX change
 
@@ -20,7 +20,7 @@ The candidate application page is now a **Decision Workspace**, not a stack of g
 - accessible Kanban stage selector in addition to drag-and-drop;
 - candidate comparison with finalist selection, criterion filters, and sorting;
 - recruiter dashboard centered on candidates requiring attention;
-- compact RequirementGraph table with a focused details editor;
+- compact role-criteria table with a focused details editor;
 - recruiter-friendly Assessment Studio without exposing low-level rubric implementation fields;
 - candidate-facing language that distinguishes lack of evidence from lack of ability;
 - no-flash dark mode and improved responsive behavior;

@@ -6,7 +6,7 @@ Show one complete hiring decision where **apparent fit, evidence coverage, and d
 ## 0:00–0:35 — create / open the role
 - Sign in as the seeded recruiter.
 - Open **Backend Engineer**.
-- Show recruiter-approved RequirementGraph: Node.js, PostgreSQL, REST API Design, Docker, Security Design, Communication, optional AWS.
+- Show recruiter-approved role criteria: Node.js, PostgreSQL, REST API Design, Docker, Security Design, Communication, optional AWS.
 - Point out that AI-generated criteria remain drafts until recruiter approval.
 
 ## 0:35–1:20 — show the flagship problem
@@ -19,10 +19,10 @@ Expected demo shape:
 - Docker weak/partial;
 - Communication missing.
 
-Open a criterion to show exact EvidenceLedger provenance rather than a black-box score.
+Open a criterion to show exact evidence provenance rather than a black-box score.
 
 ## 1:20–2:05 — close one evidence gap
-- Use VerifyLoop.
+- Use the verification plan.
 - Approve the standardized Docker verification.
 - Switch to the candidate account and complete the seeded assessment.
 - Return to the recruiter view.

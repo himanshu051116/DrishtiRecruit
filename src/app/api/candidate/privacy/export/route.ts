@@ -45,7 +45,7 @@ export async function GET() {
     return new Response(JSON.stringify({ exportedAt: new Date().toISOString(), formatVersion: 2, data: { ...record, aiExecutionMetadata: aiRuns } }, null, 2), {
       headers: {
         "content-type": "application/json; charset=utf-8",
-        "content-disposition": `attachment; filename="tracehire-data-${user.id}.json"`,
+        "content-disposition": `attachment; filename="drishtirecruit-data-${user.id}.json"`,
         "cache-control": "no-store",
       },
     });
