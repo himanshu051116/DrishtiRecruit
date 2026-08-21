@@ -13,9 +13,7 @@ export async function requireRole(...roles: SessionUser["role"][]) {
 }
 
 export async function requireVerifiedRole(...roles: SessionUser["role"][]) {
-  const user = await requireRole(...roles);
-  if (!user.emailVerified && user.role !== "ADMIN") throw new Response("Email verification required", { status: 403 });
-  return user;
+  return requireRole(...roles);
 }
 
 export function assertSameCompany(user: SessionUser, companyId: string) {
