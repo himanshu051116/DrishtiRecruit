@@ -8,7 +8,7 @@ function walk(dir) { return fs.readdirSync(dir, { withFileTypes: true }).flatMap
 function existsModule(base) {
   return [base, `${base}.ts`, `${base}.tsx`, `${base}.js`, `${base}.mjs`, path.join(base, "index.ts"), path.join(base, "index.tsx")].some((candidate) => fs.existsSync(candidate));
 }
-const files = walk(srcRoot).filter((file) => /\.(ts|tsx)$/.test(file));
+const files = walk(srcRoot).filter((file) => /\.(ts|tsx)$/.test(file) && !file.startsWith(`${path.join(srcRoot, "generated")}${path.sep}`));
 for (const file of files) {
   const text = fs.readFileSync(file, "utf8");
   if (text.includes('"use client"') || text.includes("'use client'")) {
