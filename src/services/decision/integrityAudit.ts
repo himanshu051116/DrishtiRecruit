@@ -96,7 +96,7 @@ export async function getDecisionIntegrityAudit(applicationId: string) {
   const aiRuns = await prisma.aiRun.findMany({ where: { applicationId }, orderBy: { createdAt: "desc" }, take: 20 });
   checks.push({
     id: "ai-provenance",
-    label: "AI execution provenance",
+    label: "Processing provenance",
     status: aiRuns.length ? "PASS" : "WARN",
     detail: aiRuns.length ? `${aiRuns.length} recent processing run(s) have hashed input/output provenance and provider metadata.` : "No processing run has been recorded for this application yet.",
   });

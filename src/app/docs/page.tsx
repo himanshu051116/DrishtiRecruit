@@ -12,7 +12,7 @@ const groups = [
 export default function ApiDocsPage() {
   return <main className="mx-auto max-w-6xl px-6 py-14">
     <div className="flex flex-wrap items-end justify-between gap-5">
-      <div><p className="text-sm font-medium text-zinc-500">Developer resources</p><h1 className="mt-1 text-4xl font-semibold tracking-tight">DrishtiRecruit API</h1><p className="mt-3 max-w-3xl text-sm leading-7 text-zinc-600">OpenAPI 3.1 documentation for the hackathon build. Protected routes require an authenticated DrishtiRecruit session and role/tenant authorization.</p></div>
+      <div><p className="text-sm font-medium text-zinc-500">Developer resources</p><h1 className="mt-1 text-4xl font-semibold tracking-tight">DrishtiRecruit API</h1><p className="mt-3 max-w-3xl text-sm leading-7 text-zinc-600">OpenAPI 3.1 reference for DrishtiRecruit integrations. Protected routes require an authenticated session and the appropriate workspace role.</p></div>
       <div className="flex flex-wrap gap-2"><a href="/openapi.yaml" className="rounded-xl bg-zinc-950 px-4 py-2.5 text-sm font-medium text-white">OpenAPI YAML</a><a href="/DrishtiRecruit.postman_collection.json" className="rounded-xl border border-zinc-300 px-4 py-2.5 text-sm font-medium">Postman collection</a></div>
     </div>
     <section className="mt-10 grid gap-4 md:grid-cols-2">{groups.map(([title, body]) => <article key={title} className="rounded-2xl border border-zinc-200 bg-white p-5"><h2 className="font-semibold">{title}</h2><p className="mt-2 text-sm leading-6 text-zinc-600">{body}</p></article>)}</section>

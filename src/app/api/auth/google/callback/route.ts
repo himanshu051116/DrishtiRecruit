@@ -4,7 +4,7 @@ import { createSession } from "@/lib/auth/session";
 import { writeAudit } from "@/lib/audit";
 import { beginTwoFactorChallenge } from "@/lib/auth/twoFactorChallenge";
 
-const STATE_COOKIE = "tracehire_google_oauth_state";
+const STATE_COOKIE = "drishtirecruit_google_oauth_state";
 
 type GoogleUserInfo = { sub: string; email: string; email_verified?: boolean; name?: string };
 
