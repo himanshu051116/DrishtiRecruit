@@ -35,7 +35,7 @@ const LABELS: Record<string, string> = {
   MEDIUM: "Medium",
   ADVANCED: "Advanced",
   MANUAL: "Manual",
-  AI: "AI-assisted",
+  AI: "Suggested",
   ACTIVE: "Active",
   INACTIVE: "Inactive",
   SCHEDULED: "Scheduled",

@@ -39,7 +39,7 @@ Use a local/demo PostgreSQL database. Do not point the destructive demo seed at 
 Example:
 
 ```text
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/tracehire?schema=public"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/drishtirecruit?schema=public"
 JWT_SECRET="replace-with-a-long-random-secret"
 TWO_FACTOR_ENCRYPTION_KEY="replace-with-another-long-random-secret"
 APP_URL="http://localhost:3100"

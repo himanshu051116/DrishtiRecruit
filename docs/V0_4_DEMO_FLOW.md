@@ -12,7 +12,7 @@ Communication      MISSING
 Docker             PARTIAL/WEAK
 ```
 
-## 2. Controlled VerifyLoop
+## 2. Verification plan
 
 Recruiter plans verification and approves a standardized assessment for an unresolved technical criterion.
 

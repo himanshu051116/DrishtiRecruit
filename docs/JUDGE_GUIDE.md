@@ -1,62 +1,62 @@
-# DrishtiRecruit v1.3 — Judge Guide
+# DrishtiRecruit judge guide
 
-## 30-second product thesis
-DrishtiRecruit is an Applicant Tracking System that separates **Fit**, **Evidence Coverage**, and **Decision Coverage**. It does not treat a high resume-match score as sufficient proof for a hiring decision. Instead, it shows what evidence supports each approved job criterion, identifies unresolved must-haves, recommends a controlled verification step, and preserves the final human decision in DecisionTrace.
+## Product thesis
+
+DrishtiRecruit is an evidence-first Applicant Tracking System. It separates **fit**, **evidence coverage**, and **decision coverage** so a hiring team can see the difference between a promising resume and a decision supported by enough comparable evidence.
+
+It does not make the final hiring decision. It shows the evidence behind each approved role criterion, surfaces unresolved must-haves, supports consistent verification, and records the authorized human decision with its context.
 
 ## Fastest evaluation path
-1. Sign in as `recruiter@tracehire.local` / `DrishtiRecruit123!`.
-2. Open **Backend Engineer** and the candidate **Priya Sharma**.
-3. Compare the three top metrics: high Fit vs materially lower Evidence/Decision Coverage.
-4. Open the Evidence Matrix and inspect Docker/Communication gaps.
-5. Use **Controlled VerifyLoop** to show the standardized next-verification path.
-6. Open the job's **Candidate Comparison** page and compare Priya with Arjun: Arjun has slightly lower apparent Fit but much stronger verified evidence.
-7. Sign in as Hiring Manager and inspect **DecisionTrace**; incomplete coverage requires an explicit override reason before a terminal hiring recommendation can proceed.
-8. Show **Decision Integrity Audit** on Priya’s application and the **AI Transparency** ledger.
-9. Optionally show Security (2FA/device sessions), Analytics, Assessment Studio, Interview self-scheduling, and Admin audit controls.
 
-## What is different from a generic AI ATS?
-A generic ATS often compresses candidate information into one match/rank. DrishtiRecruit preserves separate questions:
-- **Fit:** how strongly does current evidence align with the role?
-- **Evidence Coverage:** how much usable evidence exists?
-- **Decision Coverage:** have the required criteria actually been evaluated enough to support a decision?
+1. Sign in as `recruiter@drishtirecruit.local` with `DrishtiRecruit123!`.
+2. Open **Backend Engineer** and then **Priya Sharma**.
+3. Compare the three main signals: strong fit alongside lower evidence and decision coverage.
+4. Open the Evidence Matrix and inspect the Docker and Communication gaps.
+5. Use the **Verification plan** to show the standardized next step.
+6. Compare Priya with Arjun. Arjun has slightly lower apparent fit but stronger verified coverage.
+7. Sign in as a Hiring Manager and inspect the decision record. Incomplete coverage requires a reason before a terminal recommendation can proceed.
+8. Open the Decision Integrity Audit and **Processing history**.
+9. Optionally show security, analytics, Assessment Studio, interview self-scheduling, and the admin audit controls.
 
-The flagship loop is:
+## The core loop
 
-```text
-RequirementGraph
-  -> EvidenceLedger
-  -> Fit / Evidence Coverage / Decision Coverage
-  -> unresolved criterion
-  -> Controlled VerifyLoop
-  -> assessment / interview evidence
-  -> recalculation
-  -> DecisionTrace
-  -> human decision
+```mermaid
+flowchart LR
+    Role[Approved role criteria] --> Evidence[Evidence matrix]
+    Evidence --> Coverage[Fit, evidence coverage, decision coverage]
+    Coverage --> Gap[Open criterion]
+    Gap --> Verify[Verification plan]
+    Verify --> NewEvidence[Assessment or interview evidence]
+    NewEvidence --> Evidence
+    Coverage --> Decision[Human decision record]
 ```
 
-## Production-shaped safeguards worth inspecting
-- recruiter approval before AI-proposed criteria affect scoring;
-- obvious sensitive-trait criteria blocked from automated-scoring approval;
-- exact resume-source excerpts for AI evidence are accepted only when they actually occur in the uploaded resume;
-- standardized/versioned assessments preserve candidate comparability;
-- server-authoritative assessment deadlines;
-- Interviewer access is assignment-scoped and salary-bearing offer data is not available to Interviewers;
-- HIRE/REJECT DecisionTrace and stage transition commit atomically;
-- terminal applications cannot be reopened by late analysis, assessments, or interviews;
-- no autonomous final rejection/hiring decision;
-- AI/heuristic runs retain provider/prompt/fallback metadata and SHA-256 input/output hashes without duplicating raw candidate/job text;
-- new DecisionTrace evidence snapshots are SHA-256 hashed and verified in the evidence packet.
+## What makes the approach distinct
 
-## Demo credentials
-See `DEMO_CREDENTIALS.md` for every role. The seeded accounts and password are **demo-only local credentials** and must not be reused for a public production deployment.
+Many hiring systems compress candidate information into one rank or match. DrishtiRecruit instead asks three separate questions:
 
-## Deliberately unclaimed
-DrishtiRecruit does not claim validated hiring accuracy, legal compliance, fairness certification, emotion/personality inference, facial analysis, or autonomous hiring. Remote execution of untrusted candidate code is also intentionally not run inside the application process.
+- **Fit:** How closely does current information align with the role?
+- **Evidence coverage:** How much usable support is available?
+- **Decision coverage:** Have the required criteria been evaluated enough to support a decision?
 
+This matters in the seed scenario: Priya can look highly aligned yet need more verification, while Arjun can have more complete evidence. The product avoids treating either view as an automatic hiring decision.
 
-## Decision evidence packet
-On the recruiter application page, use **Decision evidence PDF** after the DecisionTrace step. It exports the same flagship distinction into an auditable artifact: Fit is separated from evidence sufficiency, each criterion retains provenance, and the human decision remains visible rather than being replaced by an AI verdict.
+## Product safeguards worth inspecting
 
+- Recruiters approve criteria before they affect evaluation.
+- Sensitive-trait criteria are guarded from automated-scoring approval.
+- Evidence excerpts must be traceable to the uploaded resume before they are saved.
+- Versioned assessments preserve comparability after assignment.
+- Assessment deadlines and workflow state are server-authoritative.
+- Interviewer access is assignment-scoped; salary-bearing offers remain protected.
+- Terminal decisions and their stage transitions are committed together.
+- Processing history retains provider, fallback, and hash metadata without duplicating raw candidate or role text.
+- Decision evidence snapshots are hashed and rechecked in the evidence packet.
 
-## v1.2 integrity layer
-The Decision Integrity Audit intentionally avoids a single “trust score.” It reports independent checks for requirement governance, evidence linkage/provenance, calculation freshness, DecisionTrace snapshot integrity, workflow consistency and AI-run provenance.
+## Deliberate limits
+
+DrishtiRecruit does not claim validated hiring accuracy, fairness certification, legal compliance, emotion/personality inference, autonomous hiring, or secure execution of untrusted candidate code. It is a decision-support workflow designed to make evidence and uncertainty visible to human reviewers.
+
+## Demo accounts
+
+See [Demo credentials](DEMO_CREDENTIALS.md) for the seeded local-only accounts. Do not reuse those credentials outside a disposable development database.

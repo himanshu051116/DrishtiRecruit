@@ -47,7 +47,7 @@ export async function validateResumeFile(file: File): Promise<ValidatedResume> {
 }
 
 export async function storeResumeLocal(candidateId: string, resume: ValidatedResume) {
-  const root = process.env.RESUME_STORAGE_DIR || path.join(process.cwd(), ".tracehire-data", "resumes");
+  const root = process.env.RESUME_STORAGE_DIR || path.join(process.cwd(), ".drishtirecruit-data", "resumes");
   const directory = path.join(root, candidateId);
   await mkdir(directory, { recursive: true, mode: 0o700 });
   const ext = resume.mimeType === "application/pdf" ? ".pdf" : ".docx";

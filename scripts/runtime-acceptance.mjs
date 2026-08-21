@@ -60,7 +60,7 @@ try {
   const home = await fetch(baseUrl, { redirect: "manual" });
   if (home.status >= 500) throw new Error(`Home page returned ${home.status}`);
   console.log(`PASS public HTTP smoke: / -> ${home.status}`);
-  if (withBrowser) run("node", ["scripts/browser-role-qa.mjs"], { env: { ...process.env, TRACEHIRE_BASE_URL: baseUrl } });
+  if (withBrowser) run("node", ["scripts/browser-role-qa.mjs"], { env: { ...process.env, DRISHTIRECRUIT_BASE_URL: baseUrl } });
 } finally {
   if (server && !server.killed) server.kill("SIGTERM");
 }

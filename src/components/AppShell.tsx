@@ -27,8 +27,8 @@ const NAV: Record<Role, NavItem[]> = {
     { href: "/recruiter/search", label: "Candidates", icon: "search" },
     { href: "/recruiter/assessments", label: "Assessments", icon: "test" },
     { href: "/recruiter/interviews/availability", label: "Interviews", icon: "calendar" },
-    { href: "/recruiter/analytics", label: "Analytics", icon: "chart", section: "Intelligence" },
-    { href: "/recruiter/ai-transparency", label: "AI transparency", icon: "spark" },
+    { href: "/recruiter/analytics", label: "Analytics", icon: "chart", section: "Decision tools" },
+    { href: "/recruiter/ai-transparency", label: "Processing history", icon: "spark" },
     { href: "/recruiter/company", label: "Company", icon: "building", section: "Workspace" },
   ],
   HIRING_MANAGER: [
@@ -37,8 +37,8 @@ const NAV: Record<Role, NavItem[]> = {
     { href: "/recruiter/search", label: "Candidates", icon: "search" },
     { href: "/recruiter/assessments", label: "Assessments", icon: "test" },
     { href: "/recruiter/interviews/availability", label: "Interviews", icon: "calendar" },
-    { href: "/recruiter/analytics", label: "Analytics", icon: "chart", section: "Intelligence" },
-    { href: "/recruiter/ai-transparency", label: "AI transparency", icon: "spark" },
+    { href: "/recruiter/analytics", label: "Analytics", icon: "chart", section: "Decision tools" },
+    { href: "/recruiter/ai-transparency", label: "Processing history", icon: "spark" },
     { href: "/recruiter/company", label: "Company", icon: "building", section: "Workspace" },
   ],
   INTERVIEWER: [
@@ -49,8 +49,8 @@ const NAV: Record<Role, NavItem[]> = {
     { href: "/admin", label: "Admin overview", icon: "admin" },
     { href: "/recruiter/jobs", label: "Jobs", icon: "briefcase" },
     { href: "/recruiter/search", label: "Candidates", icon: "search" },
-    { href: "/recruiter/analytics", label: "Analytics", icon: "chart", section: "Intelligence" },
-    { href: "/recruiter/ai-transparency", label: "AI transparency", icon: "spark" },
+    { href: "/recruiter/analytics", label: "Analytics", icon: "chart", section: "Decision tools" },
+    { href: "/recruiter/ai-transparency", label: "Processing history", icon: "spark" },
     { href: "/recruiter/assessments/analytics", label: "Assessments", icon: "test" },
   ],
 };
@@ -81,7 +81,7 @@ export function AppShell({ user, children }: { user: { name: string; role: strin
     <button className="skip-link" onClick={() => document.getElementById("main-content")?.focus()}>Skip to main content</button>
     <aside className={`app-sidebar ${open ? "is-open" : ""}`} aria-label="Primary navigation">
       <div className="sidebar-brand">
-        <Link href="/dashboard" className="brand-mark" onClick={() => setOpen(false)}><span className="brand-glyph" aria-hidden>TH</span><span><strong>DrishtiRecruit</strong><small>Evidence-backed hiring</small></span></Link>
+        <Link href="/dashboard" className="brand-mark" onClick={() => setOpen(false)}><span className="brand-glyph" aria-hidden>DR</span><span><strong>DrishtiRecruit</strong><small>Evidence-backed hiring</small></span></Link>
         <button className="mobile-close" aria-label="Close navigation" onClick={() => setOpen(false)}>×</button>
       </div>
       <nav className="sidebar-nav">
@@ -106,7 +106,7 @@ export function AppShell({ user, children }: { user: { name: string; role: strin
 }
 
 export function PublicHeader() {
-  return <header className="public-header"><div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-6"><Link href="/" className="brand-mark"><span className="brand-glyph" aria-hidden>TH</span><span><strong>DrishtiRecruit</strong><small>Evidence-backed hiring</small></span></Link><nav className="flex items-center gap-2 text-sm"><Link href="/jobs" className="btn-ghost">Open roles</Link><Link href="/login" className="btn-ghost hidden sm:inline-flex">Sign in</Link><Link href="/register" className="btn-primary">Get started</Link><ThemeToggle/></nav></div></header>;
+  return <header className="public-header"><div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-6"><Link href="/" className="brand-mark"><span className="brand-glyph" aria-hidden>DR</span><span><strong>DrishtiRecruit</strong><small>Evidence-backed hiring</small></span></Link><nav className="flex items-center gap-2 text-sm"><Link href="/jobs" className="btn-ghost">Open roles</Link><Link href="/login" className="btn-ghost hidden sm:inline-flex">Sign in</Link><Link href="/register" className="btn-primary">Get started</Link><ThemeToggle/></nav></div></header>;
 }
 
 function Icon({ name }: { name: IconName }) {

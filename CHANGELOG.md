@@ -24,7 +24,7 @@
 ## v1.2.0
 
 - Added a privacy-preserving AI Execution Ledger: provider, model, purpose, prompt version, duration, fallback state and SHA-256 input/output hashes are recorded without copying candidate/job text into the ledger.
-- Added recruiter/admin AI Transparency UI for inspecting recent requirement-extraction, resume-evidence and interview-question runs.
+- Added recruiter/admin Processing History for inspecting recent requirement extraction, resume evidence, and interview-question runs.
 - Added Decision Integrity Audit with explicit PASS/WARN/FAIL checks for criterion governance, evidence linkage/provenance, calculation freshness, DecisionTrace snapshot integrity and terminal workflow consistency.
 - Added SHA-256 hashing to new DecisionTrace evidence snapshots and surfaced integrity status in the Decision Evidence Packet.
 - Added protected JSON integrity-audit API and application-level audit panel.
@@ -72,7 +72,7 @@
 
 ## v0.7.0
 - added recruiter Assessment Studio for reusable MCQ, coding/pseudocode, SQL, debugging and practical assessments
-- linked recruiter-authored questions to approved job requirements so completed tests update EvidenceLedger/Decision Coverage
+- linked recruiter-authored questions to approved job requirements so completed tests update evidence and decision coverage
 - locked assessment content and timing after first assignment to preserve candidate comparability
 - added interviewer availability publishing with overlap validation
 - added candidate interview self-scheduling with serializable atomic slot claiming and conflict re-checks

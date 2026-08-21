@@ -4,20 +4,20 @@ Legend: **Implemented**, **Implemented / simplified execution**, **Deferred bonu
 
 | PS-2 area | v1.2 status | DrishtiRecruit implementation |
 |---|---|---|
-| Job management | Implemented | create/edit/close/delete jobs, recruiter-approved RequirementGraph, public discovery, deadline-aware publication/application gate |
+| Job management | Implemented | create/edit/close/delete jobs, recruiter-approved role criteria, public discovery, deadline-aware publication/application gate |
 | Candidate management | Implemented | candidate profile, applications, resume library, search |
 | PDF/DOCX resume upload | Implemented | validated private upload, duplicate hash checks, text extraction |
 | AI resume parsing | Implemented | heuristic fallback + structured provider adapter |
 | AI candidate/job matching | Implemented | deterministic Fit + provenance-aware evidence mapping |
 | Requirement governance | Implemented safety layer | obvious sensitive-trait criteria are blocked from recruiter approval into automated scoring; recruiter-approved job-related criteria remain the only scoring inputs |
-| Match %, missing skills, strengths, weaknesses, recommendations | Implemented | Evidence Matrix + criterion state + VerifyLoop |
+| Match %, missing skills, strengths, weaknesses, recommendations | Implemented | Evidence Matrix + criterion state + verification plan |
 | Application pipeline | Implemented | Kanban + validated stages + immutable stage-event history |
 | Interview scheduling | Implemented | recruiter direct scheduling plus candidate self-scheduling from interviewer availability; notifications + downloadable ICS |
 | Candidate schedule interviews | Implemented | atomic candidate slot booking from same-company published availability |
 | Recruiter/interviewer availability | Implemented | future slots, overlap prevention, conflict re-check at booking |
 | AI-generated interview questions | Implemented bonus | optional structured AI drafts per approved requirement, deterministic fallback templates, and explicit recruiter approval before use in interview kits |
 | Coding assessment authoring | Implemented / simplified execution | recruiter Assessment Studio creates MCQ, coding/pseudocode, SQL, debugging and practical tasks; no remote untrusted-code sandbox |
-| Standardized verification | Implemented | VerifyLoop bank plus reusable recruiter assessments |
+| Standardized verification | Implemented | verification plan plus reusable recruiter assessments |
 | Assessment comparability | Implemented | once an assessment is assigned, content/timing mutation is blocked; one-click version cloning preserves historical attempts and creates an editable inactive successor |
 | Timer / autosubmit | Implemented | candidate assessment timer, debounced server-side draft autosave and expiry submission |
 | Tab-switch detection | Implemented | visibility-change counts; explicitly not an automatic misconduct finding |
@@ -46,7 +46,7 @@ Legend: **Implemented**, **Implemented / simplified execution**, **Deferred bonu
 | API documentation | Implemented | OpenAPI file + internal API contracts + Postman collection |
 
 ## Flagship beyond baseline
-DrishtiRecruit adds RequirementGraph, EvidenceLedger, Decision Coverage, controlled VerifyLoop and DecisionTrace. It also closes two practical hiring-process gaps: reusable comparable assessments and candidate slot-based interview self-scheduling. These are integrated into the same evidence and workflow architecture rather than added as disconnected demos.
+DrishtiRecruit adds approved role criteria, evidence records, Decision Coverage, controlled verification planning, and a decision trace. It also closes two practical hiring-process gaps: reusable comparable assessments and candidate slot-based interview self-scheduling. These are integrated into the same evidence and workflow architecture rather than added as disconnected demos.
 
 ## v0.8 QA hardening notes
 - **Assessment timer:** server-authoritative deadline; late request payloads cannot extend candidate working time.
@@ -73,7 +73,7 @@ DrishtiRecruit adds RequirementGraph, EvidenceLedger, Decision Coverage, control
 ## v1.0 release hardening
 - Public jobs/careers hide expired application deadlines and submission is rejected server-side after the deadline.
 - Candidate Privacy Center supports own-data JSON export and auditable deletion requests without pretending that generic deletion is legally safe.
-- Admin retention cleanup is intentionally limited to expired operational records; EvidenceLedger, DecisionTrace, applications and audit history are preserved.
+- Admin retention cleanup is intentionally limited to expired operational records; evidence records, decision traces, applications and audit history are preserved.
 - `/api/ready` adds deployment-readiness checks for database, resume storage and required production configuration.
 
 

@@ -11,7 +11,7 @@ export function ThemeToggle() {
     const next = !(dark ?? document.documentElement.dataset.theme === "dark");
     setDark(next);
     document.documentElement.dataset.theme = next ? "dark" : "light";
-    window.localStorage.setItem("tracehire-theme", next ? "dark" : "light");
+    window.localStorage.setItem("drishtirecruit-theme", next ? "dark" : "light");
   }
   const isDark = dark ?? false;
   return <button type="button" onClick={toggle} aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"} className="icon-button" title={isDark ? "Light theme" : "Dark theme"}>

@@ -4,9 +4,9 @@
 Do not demo DrishtiRecruit as a sequence of CRUD screens. Demonstrate one state-changing hiring story: **high apparent fit -> insufficient evidence -> targeted verification -> stronger decision coverage -> human decision**.
 
 ## 0:00–0:35 — Role criteria
-1. Login as `recruiter@tracehire.local`.
+1. Login as `recruiter@drishtirecruit.local`.
 2. Open the seeded Backend Engineer job.
-3. Show RequirementGraph and emphasize that AI-proposed criteria are drafts until recruiter approval.
+3. Show the role criteria and emphasize that suggested criteria are drafts until recruiter approval.
 4. Point out must-have vs important vs preferred criteria.
 
 ## 0:35–1:20 — Candidate A: high fit, incomplete evidence
@@ -15,7 +15,7 @@ Do not demo DrishtiRecruit as a sequence of CRUD screens. Demonstrate one state-
 3. Open the Evidence Matrix and click one evidence item to show provenance.
 4. Highlight the unresolved must-have and explain: absence of evidence is **not** treated as inability.
 
-## 1:20–2:05 — Controlled VerifyLoop
+## 1:20–2:05 — Verification plan
 1. Show the ranked verification recommendation.
 2. Approve the standardized assessment rather than allowing an AI-generated arbitrary test.
 3. Switch to the Candidate account and open the assessment.

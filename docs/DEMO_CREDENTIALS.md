@@ -1,16 +1,16 @@
-# DrishtiRecruit v1.3 demo credentials
+# DrishtiRecruit demo credentials
 
 These accounts are created **only by the local demo seed** (`npm run db:seed`). They are not production credentials.
 
 | Role | Email | Password |
 |---|---|---|
-| Recruiter | `recruiter@tracehire.local` | `DrishtiRecruit123!` |
-| Candidate A — high fit / under-verified | `candidate@tracehire.local` | `DrishtiRecruit123!` |
-| Candidate B — evidence-rich | `arjun@tracehire.local` | `DrishtiRecruit123!` |
-| Candidate C — clear gaps | `meera@tracehire.local` | `DrishtiRecruit123!` |
-| Hiring Manager | `manager@tracehire.local` | `DrishtiRecruit123!` |
-| Interviewer | `interviewer@tracehire.local` | `DrishtiRecruit123!` |
-| Platform Admin | `admin@tracehire.local` | `DrishtiRecruit123!` |
+| Recruiter | `recruiter@drishtirecruit.local` | `DrishtiRecruit123!` |
+| Candidate A — high fit / under-verified | `candidate@drishtirecruit.local` | `DrishtiRecruit123!` |
+| Candidate B — evidence-rich | `arjun@drishtirecruit.local` | `DrishtiRecruit123!` |
+| Candidate C — clear gaps | `meera@drishtirecruit.local` | `DrishtiRecruit123!` |
+| Hiring Manager | `manager@drishtirecruit.local` | `DrishtiRecruit123!` |
+| Interviewer | `interviewer@drishtirecruit.local` | `DrishtiRecruit123!` |
+| Platform Admin | `admin@drishtirecruit.local` | `DrishtiRecruit123!` |
 
 ## Recommended demo roles
 

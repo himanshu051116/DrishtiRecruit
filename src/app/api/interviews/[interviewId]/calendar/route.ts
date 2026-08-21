@@ -12,5 +12,5 @@ export async function GET(_request: Request, { params }: { params: Promise<{ int
   const title = `${interview.application.job.title} interview — ${interview.application.job.company.name}`;
   const description = `DrishtiRecruit interview for ${interview.application.candidate.user.name}. Interviewer: ${interview.interviewer.name}.`;
   const ics = interviewIcs({ id: interview.id, title, description, start: interview.scheduledAt, durationMinutes: interview.durationMin, location: interview.application.job.location ?? undefined, url: interview.meetingUrl ?? undefined });
-  return new Response(ics, { headers: { "content-type": "text/calendar; charset=utf-8", "content-disposition": `attachment; filename="tracehire-interview-${interview.id}.ics"`, "cache-control": "private, no-store" } });
+  return new Response(ics, { headers: { "content-type": "text/calendar; charset=utf-8", "content-disposition": `attachment; filename="drishtirecruit-interview-${interview.id}.ics"`, "cache-control": "private, no-store" } });
 }

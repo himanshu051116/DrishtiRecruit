@@ -58,7 +58,7 @@ export function buildDecisionPacketLines(application: Awaited<ReturnType<typeof 
   );
 
   const lines: string[] = [
-    "TRACEHIRE DECISION EVIDENCE PACKET",
+    "DRISHTIRECRUIT DECISION EVIDENCE PACKET",
     "",
     `Generated: ${new Date().toISOString()}`,
     `Company: ${clean(application.job.company.name)}`,
@@ -128,8 +128,8 @@ export function buildDecisionPacketLines(application: Awaited<ReturnType<typeof 
     lines.push(`${event.createdAt.toISOString()} | ${event.fromStage ?? "START"} -> ${event.toStage}${event.reason ? ` | ${clean(event.reason)}` : ""}`);
   }
 
-  lines.push("", "AI / HEURISTIC EXECUTION PROVENANCE");
-  if (!application.aiRuns.length) lines.push("No application-linked AI/heuristic runs recorded yet.");
+  lines.push("", "PROCESSING HISTORY");
+  if (!application.aiRuns.length) lines.push("No application-linked processing runs recorded yet.");
   for (const run of application.aiRuns) {
     lines.push(`${run.createdAt.toISOString()} | ${run.purpose} | ${run.provider}${run.model ? `/${run.model}` : ""} | ${run.status}${run.usedFallback ? " | FALLBACK" : ""} | ${run.durationMs}ms`);
     lines.push(`  Prompt ${run.promptVersion} | input SHA-256 ${run.inputSha256} | output SHA-256 ${run.outputSha256 ?? "—"}`);

@@ -14,7 +14,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ app
     return new Response(new Uint8Array(pdf), {
       headers: {
         "content-type": "application/pdf",
-        "content-disposition": `attachment; filename="tracehire-decision-packet-${safeRole}-${application.id}.pdf"`,
+        "content-disposition": `attachment; filename="drishtirecruit-decision-packet-${safeRole}-${application.id}.pdf"`,
         "cache-control": "private, no-store",
       },
     });

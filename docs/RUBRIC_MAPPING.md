@@ -3,7 +3,7 @@
 | Judging area | Weight | What to inspect in DrishtiRecruit |
 |---|---:|---|
 | Core Functionality | 30% | jobs, candidates, resume upload/parsing, application pipeline, assessments, interviews, notifications, offers, candidate portal, admin |
-| AI Features & Innovation | 15% | RequirementGraph drafts, provenance-aware resume evidence, Decision Coverage, controlled VerifyLoop, approved interview-question drafts, AI execution provenance |
+| AI Features & Innovation | 15% | suggested criteria, provenance-aware resume evidence, Decision Coverage, controlled verification planning, approved interview-question drafts, processing history |
 | UI/UX Design | 15% | recruiter Evidence Matrix, comparison view, candidate portal, Assessment Studio, dark/light mode, responsive/loading/error states |
 | Code Quality & Architecture | 15% | deterministic scoring boundary, AI adapters, AI Run Ledger, Decision Integrity Audit, canonical snapshot hashing, domain services, Prisma schema, transaction guards, versioned assessments, OpenAPI |
 | Authentication & Security | 10% | OAuth/password auth, verified email, DB sessions/device revocation, 2FA, RBAC, tenant isolation, audit logs, upload validation, mutation origin checks |

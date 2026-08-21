@@ -65,10 +65,10 @@ npm run dev
 ```
 
 Then manually exercise:
-1. Recruiter job + RequirementGraph approval.
+1. Recruiter job + role-criteria approval.
 2. Candidate application + PDF/DOCX resume upload.
 3. Evidence analysis and provenance matrix.
-4. VerifyLoop assessment assignment.
+4. Verification-plan assessment assignment.
 5. Assessment autosave and normal submit.
 6. Server-deadline behavior using an expired seeded/test attempt.
 7. Candidate interview self-booking and conflicting-slot rejection.

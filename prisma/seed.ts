@@ -52,10 +52,10 @@ async function main() {
   await prisma.company.deleteMany();
 
   const company = await prisma.company.create({ data: { name: "Northstar Systems", industry: "Software", size: "51-200", description: "B2B software company building secure cloud products.", website: "https://example.com", socialLinks: ["https://www.linkedin.com"], officeLocations: ["Bengaluru", "Remote"] } });
-  const recruiter = await prisma.user.create({ data: { name: "Riya Recruiter", email: "recruiter@tracehire.local", passwordHash, role: "RECRUITER", companyId: company.id, emailVerifiedAt: new Date() } });
-  const manager = await prisma.user.create({ data: { name: "Harsh Hiring Manager", email: "manager@tracehire.local", passwordHash, role: "HIRING_MANAGER", companyId: company.id, emailVerifiedAt: new Date() } });
-  const interviewer = await prisma.user.create({ data: { name: "Ira Interviewer", email: "interviewer@tracehire.local", passwordHash, role: "INTERVIEWER", companyId: company.id, emailVerifiedAt: new Date() } });
-  await prisma.user.create({ data: { name: "DrishtiRecruit Admin", email: "admin@tracehire.local", passwordHash, role: "ADMIN", emailVerifiedAt: new Date() } });
+  const recruiter = await prisma.user.create({ data: { name: "Riya Recruiter", email: "recruiter@drishtirecruit.local", passwordHash, role: "RECRUITER", companyId: company.id, emailVerifiedAt: new Date() } });
+  const manager = await prisma.user.create({ data: { name: "Harsh Hiring Manager", email: "manager@drishtirecruit.local", passwordHash, role: "HIRING_MANAGER", companyId: company.id, emailVerifiedAt: new Date() } });
+  const interviewer = await prisma.user.create({ data: { name: "Ira Interviewer", email: "interviewer@drishtirecruit.local", passwordHash, role: "INTERVIEWER", companyId: company.id, emailVerifiedAt: new Date() } });
+  await prisma.user.create({ data: { name: "DrishtiRecruit Admin", email: "admin@drishtirecruit.local", passwordHash, role: "ADMIN", emailVerifiedAt: new Date() } });
 
   const job = await prisma.job.create({
     data: {
@@ -74,9 +74,9 @@ async function main() {
   });
   const req = Object.fromEntries(job.requirements.map((item) => [item.name, item]));
 
-  const priya = await createCandidate("Priya Sharma", "candidate@tracehire.local", passwordHash, ["Node.js", "PostgreSQL", "Docker"], "Backend engineer with two years building Node.js and Express services. Built REST APIs backed by PostgreSQL and implemented authentication controls. Containerized development using Docker. Basic AWS exposure.");
-  const arjun = await createCandidate("Arjun Rao", "arjun@tracehire.local", passwordHash, ["Node.js", "PostgreSQL", "Docker", "Security"], "Backend engineer with production Node.js, PostgreSQL, REST design, Docker, security reviews, and AWS deployments. Led architecture reviews and stakeholder demos.");
-  const meera = await createCandidate("Meera Iyer", "meera@tracehire.local", passwordHash, ["JavaScript", "MongoDB"], "Full-stack developer focused on JavaScript and MongoDB with frontend-heavy experience. Some API work and cloud exposure.");
+  const priya = await createCandidate("Priya Sharma", "candidate@drishtirecruit.local", passwordHash, ["Node.js", "PostgreSQL", "Docker"], "Backend engineer with two years building Node.js and Express services. Built REST APIs backed by PostgreSQL and implemented authentication controls. Containerized development using Docker. Basic AWS exposure.");
+  const arjun = await createCandidate("Arjun Rao", "arjun@drishtirecruit.local", passwordHash, ["Node.js", "PostgreSQL", "Docker", "Security"], "Backend engineer with production Node.js, PostgreSQL, REST design, Docker, security reviews, and AWS deployments. Led architecture reviews and stakeholder demos.");
+  const meera = await createCandidate("Meera Iyer", "meera@drishtirecruit.local", passwordHash, ["JavaScript", "MongoDB"], "Full-stack developer focused on JavaScript and MongoDB with frontend-heavy experience. Some API work and cloud exposure.");
 
   const appPriya = await prisma.application.create({ data: { jobId: job.id, candidateId: priya.candidate.id, resumeId: priya.resume.id, stage: "ASSESSMENT", fitScore: 91, evidenceCoverage: 63, decisionCoverage: 45 } });
   const appArjun = await prisma.application.create({ data: { jobId: job.id, candidateId: arjun.candidate.id, resumeId: arjun.resume.id, stage: "HR_INTERVIEW", fitScore: 86, evidenceCoverage: 93, decisionCoverage: 94 } });
@@ -109,7 +109,7 @@ async function main() {
     startsAt.setDate(startsAt.getDate() + item.dayOffset);
     startsAt.setHours(item.hour, 0, 0, 0);
     const endsAt = new Date(startsAt.getTime() + 45 * 60_000);
-    await prisma.interviewAvailabilitySlot.create({ data: { companyId: company.id, interviewerId: interviewer.id, createdById: recruiter.id, startsAt, endsAt, mode: "VIDEO", meetingUrl: "https://meet.example/tracehire-demo" } });
+    await prisma.interviewAvailabilitySlot.create({ data: { companyId: company.id, interviewerId: interviewer.id, createdById: recruiter.id, startsAt, endsAt, mode: "VIDEO", meetingUrl: "https://meet.example/drishtirecruit-demo" } });
   }
 
   await prisma.setting.createMany({ data: [
@@ -136,13 +136,13 @@ async function main() {
   await prisma.notification.create({ data: { userId: priya.user.id, type: "ASSESSMENT_ASSIGNED", title: "Backend Engineer: assessment assigned", body: "Backend Evidence Verification is ready in your candidate portal." } });
 
   console.log("DrishtiRecruit v1.1 demo seeded");
-  console.log(`Recruiter: recruiter@tracehire.local / ${PASSWORD}`);
-  console.log(`Candidate A: candidate@tracehire.local / ${PASSWORD}`);
-  console.log(`Candidate B: arjun@tracehire.local / ${PASSWORD}`);
-  console.log(`Candidate C: meera@tracehire.local / ${PASSWORD}`);
-  console.log(`Manager: manager@tracehire.local / ${PASSWORD}`);
-  console.log(`Interviewer: interviewer@tracehire.local / ${PASSWORD}`);
-  console.log(`Admin: admin@tracehire.local / ${PASSWORD}`);
+  console.log(`Recruiter: recruiter@drishtirecruit.local / ${PASSWORD}`);
+  console.log(`Candidate A: candidate@drishtirecruit.local / ${PASSWORD}`);
+  console.log(`Candidate B: arjun@drishtirecruit.local / ${PASSWORD}`);
+  console.log(`Candidate C: meera@drishtirecruit.local / ${PASSWORD}`);
+  console.log(`Manager: manager@drishtirecruit.local / ${PASSWORD}`);
+  console.log(`Interviewer: interviewer@drishtirecruit.local / ${PASSWORD}`);
+  console.log(`Admin: admin@drishtirecruit.local / ${PASSWORD}`);
   console.log(`Job ID: ${job.id}`);
 }
 

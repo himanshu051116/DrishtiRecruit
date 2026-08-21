@@ -3,15 +3,15 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const baseUrl = (process.env.TRACEHIRE_BASE_URL || "http://127.0.0.1:3100").replace(/\/$/, "");
+const baseUrl = (process.env.DRISHTIRECRUIT_BASE_URL || "http://127.0.0.1:3100").replace(/\/$/, "");
 const debugPort = Number(process.env.CHROMIUM_DEBUG_PORT || 9223);
-const password = process.env.TRACEHIRE_DEMO_PASSWORD || "DrishtiRecruit123!";
+const password = process.env.DRISHTIRECRUIT_DEMO_PASSWORD || "DrishtiRecruit123!";
 const roles = [
-  { name: "Candidate", email: "candidate@tracehire.local", route: "/candidate/dashboard", marker: "Candidate dashboard" },
-  { name: "Recruiter", email: "recruiter@tracehire.local", route: "/recruiter/dashboard", marker: "Recruiter dashboard" },
-  { name: "Hiring Manager", email: "manager@tracehire.local", route: "/recruiter/dashboard", marker: "Recruiter dashboard" },
-  { name: "Interviewer", email: "interviewer@tracehire.local", route: "/interviewer/interviews", marker: "Interviewer workspace" },
-  { name: "Admin", email: "admin@tracehire.local", route: "/admin", marker: "Platform administration" },
+  { name: "Candidate", email: "candidate@drishtirecruit.local", route: "/candidate/dashboard", marker: "Candidate dashboard" },
+  { name: "Recruiter", email: "recruiter@drishtirecruit.local", route: "/recruiter/dashboard", marker: "Recruiter dashboard" },
+  { name: "Hiring Manager", email: "manager@drishtirecruit.local", route: "/recruiter/dashboard", marker: "Recruiter dashboard" },
+  { name: "Interviewer", email: "interviewer@drishtirecruit.local", route: "/interviewer/interviews", marker: "Interviewer workspace" },
+  { name: "Admin", email: "admin@drishtirecruit.local", route: "/admin", marker: "Platform administration" },
 ];
 
 function commandExists(command) {
@@ -40,7 +40,7 @@ async function evaluate(cdp,sessionId,expression){ const result=await cdp.send("
 
 const chrome = chromiumPath();
 if(!chrome) throw new Error("Chrome/Chromium not found. Set CHROMIUM_PATH.");
-const profile=fs.mkdtempSync(path.join(os.tmpdir(),"tracehire-browser-qa-"));
+const profile=fs.mkdtempSync(path.join(os.tmpdir(),"drishtirecruit-browser-qa-"));
 const child=spawn(chrome,["--headless=new","--disable-gpu","--no-first-run","--no-default-browser-check","--no-sandbox",`--remote-debugging-port=${debugPort}`,`--user-data-dir=${profile}`,"about:blank"],{stdio:"ignore"});
 let cdp;
 try{
