@@ -5,6 +5,14 @@ function normalizeText(text: string) {
 }
 
 async function extractPdf(buffer: Buffer) {
+  const canvas = await import("@napi-rs/canvas");
+  // pdfjs-dist expects these browser geometry APIs at module-load time. Vercel's
+  // Node runtime does not provide them, while @napi-rs/canvas does.
+  Object.assign(globalThis, {
+    DOMMatrix: canvas.DOMMatrix,
+    ImageData: canvas.ImageData,
+    Path2D: canvas.Path2D,
+  });
   const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
   const loadingTask = pdfjs.getDocument({ data: new Uint8Array(buffer), useSystemFonts: true });
   const pdf = await loadingTask.promise;
