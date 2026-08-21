@@ -15,12 +15,13 @@ export async function POST(request: Request) {
     if (user.emailVerifiedAt) return ok({ alreadyVerified: true });
     const token = await issueEmailVerificationToken(user.id);
     const appUrl = process.env.APP_URL ?? "http://localhost:3000";
-    await sendTransactionalEmail({
+    const delivery = await sendTransactionalEmail({
       to: user.email,
       subject: "Verify your DrishtiRecruit email",
       text: `Verify your email: ${appUrl}/verify-email?token=${encodeURIComponent(token)}. This link expires in 30 minutes.`,
       template: "EMAIL_VERIFICATION",
     });
-    return ok({ sent: true, developmentVerificationToken: process.env.NODE_ENV === "production" ? undefined : token });
+    const emailDelivery = delivery.delivered ? "sent" : delivery.mode === "outbox" ? "not_configured" : "failed";
+    return ok({ sent: delivery.delivered, emailDelivery, developmentVerificationToken: process.env.NODE_ENV === "production" ? undefined : token });
   } catch (error) { return fail(error); }
 }

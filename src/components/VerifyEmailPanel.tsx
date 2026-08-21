@@ -2,10 +2,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export function VerifyEmailPanel({ token }: { token?: string }) {
+type DeliveryStatus = "not_configured" | "failed";
+
+export function VerifyEmailPanel({ token, deliveryStatus }: { token?: string; deliveryStatus?: DeliveryStatus }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState(token ? "Verification link loaded. Confirm below." : "Open the verification link from your email, or resend it while signed in.");
+  const [message, setMessage] = useState(token ? "Verification link loaded. Confirm below." : deliveryStatus === "not_configured" ? "Email delivery is not configured for this site. Contact the workspace administrator." : deliveryStatus === "failed" ? "The verification email could not be delivered. Contact the workspace administrator." : "Open the verification link from your email, or resend it while signed in.");
 
   async function verify() {
     if (!token) return;
@@ -27,7 +29,9 @@ export function VerifyEmailPanel({ token }: { token?: string }) {
       const body = await response.json();
       if (!response.ok) throw new Error(body.error ?? "Could not resend verification");
       if (body.data?.developmentVerificationToken) setMessage(`Development token issued: ${body.data.developmentVerificationToken}`);
-      else setMessage(body.data?.alreadyVerified ? "This email is already verified." : "A fresh verification message was queued.");
+      else if (body.data?.emailDelivery === "not_configured") setMessage("Email delivery is not configured for this site. Contact the workspace administrator.");
+      else if (body.data?.emailDelivery === "failed") setMessage("The verification email could not be delivered. Contact the workspace administrator.");
+      else setMessage(body.data?.alreadyVerified ? "This email is already verified." : "A fresh verification email has been sent.");
     } catch (error) { setMessage(error instanceof Error ? error.message : "Could not resend verification"); }
     finally { setBusy(false); }
   }

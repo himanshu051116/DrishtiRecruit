@@ -31,14 +31,15 @@ export async function POST(request: Request) {
 
     const verificationToken = await issueEmailVerificationToken(user.id);
     const appUrl = process.env.APP_URL ?? "http://localhost:3000";
-    await sendTransactionalEmail({
+    const delivery = await sendTransactionalEmail({
       to: user.email,
       subject: "Verify your DrishtiRecruit email",
       text: `Verify your email to activate protected DrishtiRecruit workflows: ${appUrl}/verify-email?token=${encodeURIComponent(verificationToken)}. This link expires in 30 minutes.`,
       template: "EMAIL_VERIFICATION",
     });
     await createSession({ id: user.id, email: user.email, name: user.name, role: user.role, companyId: user.companyId, emailVerified: false });
-    return ok({ user: { id: user.id, name: user.name, role: user.role, emailVerified: false }, developmentVerificationToken: process.env.NODE_ENV === "production" ? undefined : verificationToken }, { status: 201 });
+    const emailDelivery = delivery.delivered ? "sent" : delivery.mode === "outbox" ? "not_configured" : "failed";
+    return ok({ user: { id: user.id, name: user.name, role: user.role, emailVerified: false }, emailDelivery, developmentVerificationToken: process.env.NODE_ENV === "production" ? undefined : verificationToken }, { status: 201 });
   } catch (error) {
     if (hasPrismaCode(error, "P2002")) return Response.json({ ok: false, error: "EMAIL_IN_USE" }, { status: 409 });
     return fail(error);
