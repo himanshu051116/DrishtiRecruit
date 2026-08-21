@@ -27,17 +27,18 @@
     "runtime:acceptance:full": "node scripts/runtime-acceptance.mjs --db --seed --browser"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^1.0.7",
     "@prisma/adapter-pg": "^7.0.0",
     "@prisma/client": "^7.0.0",
     "bcryptjs": "^3.0.2",
     "jose": "^6.0.13",
+    "mammoth": "^1.9.0",
     "next": "16.2.11",
+    "pdfjs-dist": "^5.4.0",
     "pg": "^8.16.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "zod": "^3.25.0",
-    "mammoth": "^1.9.0",
-    "pdfjs-dist": "^5.4.0"
+    "zod": "^3.25.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.0",
@@ -45,12 +46,12 @@
     "@types/pg": "^8.15.5",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "dotenv": "^17.4.2",
     "prisma": "^7.0.0",
     "tailwindcss": "^4.1.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
-    "vitest": "^3.2.4",
-    "dotenv": "^17.4.2"
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=22.12.0"
